@@ -1,6 +1,6 @@
 <template>
     <div class="fillcontain">
-      	<div class="go-back bt"><el-button type="success">返回</el-button></div>
+      	<div class="go-back bt"><el-button type="primary">返回</el-button></div>
         <div class="table_container bt">
 	        <div class="sub-title">基本信息</div>
             <el-table

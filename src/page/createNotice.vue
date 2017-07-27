@@ -1,119 +1,76 @@
 <template>
     <div class="fillcontain">
-        <div class="table_container">
-            <el-table
-                :data="tableData"
-                highlight-current-row
-                style="width: 100%">
-                <el-table-column
-                  type="index"
-                  width="100">
-                </el-table-column>
-                <el-table-column
-                  property="registe_time"
-                  label="注册日期"
-                  width="220">
-                </el-table-column>
-                <el-table-column
-                  property="username"
-                  label="用户姓名"
-                  width="220">
-                </el-table-column>
-                <el-table-column
-                  property="city"
-                  label="注册地址">
-                </el-table-column>
-            </el-table>
-            <div class="Pagination" style="text-align: left;margin-top: 10px;">
-                <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="currentPage"
-                  :page-size="20"
-                  layout="total, prev, pager, next"
-                  :total="count">
-                </el-pagination>
-            </div>
-        </div>
+       <div class="go-back bt"><el-button type="primary">返回</el-button></div>
+       <el-row class="form-wrap bt">
+          <el-col :span="8">
+            <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="公告类型">
+              <el-select v-model="form.region" placeholder="请选择公告类型">
+                <el-option label="游戏介绍" value="shanghai"></el-option>
+                <el-option label="游戏公告" value="beijing"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="公告标题">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="公告内容">
+              <el-input type="textarea" v-model="form.desc"></el-input>
+            </el-form-item>
+            <el-form-item label="公告状态">
+              <el-radio-group v-model="form.resource">
+                <el-radio label="启用"></el-radio>
+                <el-radio label="停用"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+        </el-form>
+        </el-col>
+       </el-row>
+      <el-row class="btn-options">
+          <el-button type="primary" @click="onSubmit">保存</el-button>
+          <el-button>取消</el-button>
+      </el-row>
     </div>
 </template>
 
 <script>
-    import headTop from '../components/headTop'
     import {getUserList, getUserCount} from '@/api/getData'
     export default {
-        data(){
-            return {
-                tableData: [{
-                  registe_time: '2016-05-02',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                  registe_time: '2016-05-04',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                  registe_time: '2016-05-01',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                  registe_time: '2016-05-03',
-                  username: '王小虎',
-                  city: '上海市普陀区金沙江路 1516 弄'
-                }],
-                currentRow: null,
-                offset: 0,
-                limit: 20,
-                count: 0,
-                currentPage: 1,
-            }
-        },
-    	components: {
-    		headTop,
-    	},
-        created(){
-            this.initData();
-        },
-        methods: {
-            async initData(){
-                try{
-                    const countData = await getUserCount();
-                    if (countData.status == 1) {
-                        this.count = countData.count;
-                    }else{
-                        throw new Error('获取数据失败');
-                    }
-                    this.getUsers();
-                }catch(err){
-                    console.log('获取数据失败', err);
-                }
-            },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
-            },
-            handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1)*this.limit;
-                this.getUsers()
-            },
-            async getUsers(){
-                const Users = await getUserList({offset: this.offset, limit: this.limit});
-                this.tableData = [];
-                Users.forEach(item => {
-                    const tableData = {};
-                    tableData.username = item.username;
-                    tableData.registe_time = item.registe_time;
-                    tableData.city = item.city;
-                    this.tableData.push(tableData);
-                })
-            }
-        },
+        data() {
+      return {
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        }
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log('submit!');
+      }
+    }
     }
 </script>
 
 <style lang="less">
 	@import '../style/mixin';
+    .go-back{
+      margin: 0 20px;
+      padding:10px 0;
+    }
     .table_container{
         padding: 20px;
+    }
+    .form-wrap{
+      margin:0 20px;
+      padding: 30px 50px; 
+    }
+    .btn-options{
+      padding:20px 60px;
     }
 </style>

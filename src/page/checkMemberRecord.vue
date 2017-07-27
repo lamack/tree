@@ -1,6 +1,6 @@
 <template>
     <div class="fillcontain">
-    	<div class="go-back bt"><el-button type="success">返回</el-button></div>
+    	<div class="go-back bt"><el-button type="primary">返回</el-button></div>
     	<div class="header-wrap bt">
     		<el-row>
 	    		<el-col :span="2" class="type-option">
