@@ -2,7 +2,7 @@
     <div class="fillcontain">
        <div class="go-back bt"><el-button type="primary">返回</el-button></div>
        <el-row class="form-wrap bt">
-          <el-col :span="8">
+          <el-col :span="10">
             <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="公告类型">
               <el-select v-model="form.region" placeholder="请选择公告类型">

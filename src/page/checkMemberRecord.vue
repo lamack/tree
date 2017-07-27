@@ -3,7 +3,7 @@
     	<div class="go-back bt"><el-button type="primary">返回</el-button></div>
     	<div class="header-wrap bt">
     		<el-row>
-	    		<el-col :span="2" class="type-option">
+	    		<el-col :span="4" class="type-option">
 	    			<label>类型</label>
 	    			<el-dropdown trigger="click" menu-align="start" @command="handleCommand">
 	                    <span class="el-dropdown-link">
@@ -17,7 +17,7 @@
 	                    </el-dropdown-menu>
 	                </el-dropdown>
 	    		</el-col>
-	    		<el-col :span="8" class="time-option">
+	    		<el-col :span="12" class="time-option">
 	    			<label>时间范围</label>
 	    			<el-date-picker
 				      v-model="value1"
