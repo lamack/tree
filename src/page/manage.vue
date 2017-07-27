@@ -6,57 +6,57 @@
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>会员管理</template>
-						<el-menu-item index="userList">查看编辑</el-menu-item>
-						<el-menu-item index="shopList">查询记录</el-menu-item>
+						<el-menu-item index="checkMemberEditor">查看编辑</el-menu-item>
+						<el-menu-item index="checkMemberRecord">查询记录</el-menu-item>
 						<!-- <el-menu-item index="foodList">食品列表</el-menu-item>
 						<el-menu-item index="orderList">订单列表</el-menu-item>
 						<el-menu-item index="adminList">管理员列表</el-menu-item> -->
 					</el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-plus"></i>公告管理</template>
-						<el-menu-item index="addShop">新建/编辑公告</el-menu-item>
+						<el-menu-item index="createNotice">新建/编辑公告</el-menu-item>
 						<!-- <el-menu-item index="addGoods">添加商品</el-menu-item> -->
 					</el-submenu>
 					<el-submenu index="4">
 						<template slot="title"><i class="el-icon-star-on"></i>竞答管理</template>
-						<el-menu-item index="visitor">竞答设置</el-menu-item>
+						<el-menu-item index="quizzesSetting">竞答设置</el-menu-item>
 					</el-submenu>
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-edit"></i>抽奖管理</template>
-						<el-menu-item index="vueEdit">奖品设置</el-menu-item>
+						<el-menu-item index="awardSetting">奖品设置</el-menu-item>
 						<el-submenu index="5-1">
 				          <template slot="title">用户获奖列表</template>
-				          <el-menu-item index="1-5-1">用户获奖详情</el-menu-item>
+				          <el-menu-item index="awardDetail">用户获奖详情</el-menu-item>
 				        </el-submenu>
 					</el-submenu>
 					<el-submenu index="6">
 						<template slot="title"><i class="el-icon-setting"></i>任务管理</template>
-						<el-menu-item index="adminSet">任务编辑</el-menu-item>
+						<el-menu-item index="taskEditor">任务编辑</el-menu-item>
 					</el-submenu>
 					<el-submenu index="7">
 						<template slot="title"><i class="el-icon-warning"></i>道具管理</template>
-						<el-menu-item index="explain">道具设置</el-menu-item>
+						<el-menu-item index="sceneSetting">道具设置</el-menu-item>
 					</el-submenu>
 					<el-submenu index="8">
 						<template slot="title"><i class="el-icon-warning"></i>分享管理</template>
-						<el-menu-item index="explain">查看详情</el-menu-item>
-						<el-menu-item index="explain">集赞管理</el-menu-item>
-						<el-menu-item index="explain">绿植互送管理</el-menu-item>
-						<el-menu-item index="explain">树苗赠送管理</el-menu-item>
+						<el-menu-item index="checkShareDetail">查看详情</el-menu-item>
+						<el-menu-item index="coletFavManage">集赞管理</el-menu-item>
+						<el-menu-item index="plantsExgManage">绿植互送管理</el-menu-item>
+						<el-menu-item index="treeSendManage">树苗赠送管理</el-menu-item>
 					</el-submenu>
 					<el-submenu index="9">
 						<template slot="title"><i class="el-icon-warning"></i>养成管理</template>
-						<el-menu-item index="explain">灾害触发列表</el-menu-item>
-						<el-menu-item index="explain">自然灾害设置</el-menu-item>
+						<el-menu-item index="disasterList">灾害触发列表</el-menu-item>
+						<el-menu-item index="disasterSetting">自然灾害设置</el-menu-item>
 					</el-submenu>
 					<el-submenu index="10">
 						<template slot="title"><i class="el-icon-warning"></i>系统管理</template>
-						<el-menu-item index="explain">查看编辑</el-menu-item>
-						<el-menu-item index="explain">修改密码</el-menu-item>
-						<el-menu-item index="explain">添加后台用户</el-menu-item>
+						<el-menu-item index="checkSysEditor">查看编辑</el-menu-item>
+						<el-menu-item index="modifyPsd">修改密码</el-menu-item>
+						<el-menu-item index="addBgUser">添加后台用户</el-menu-item>
 						<el-submenu index="10-1">
 				          <template slot="title">管理权限设置</template>
-				          <el-menu-item index="1-4-1">设置权限</el-menu-item>
+				          <el-menu-item index="setAuthority">设置权限</el-menu-item>
 				        </el-submenu>
 					</el-submenu>
 				</el-menu>
