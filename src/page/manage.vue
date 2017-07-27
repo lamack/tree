@@ -1,21 +1,17 @@
 <template>
 	<div class="manage_page fillcontain">
 		<el-row style="height: 100%;">
-	  		<el-col :span="4"  style="min-height: 100%; background-color: #324057;">
+	  		<el-col :span="3"  style="min-height: 100%; background-color: #324057;">
 				<el-menu :default-active="defaultActive" style="min-height: 100%;" theme="dark" router>
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>会员管理</template>
 						<el-menu-item index="checkMemberEditor">查看编辑</el-menu-item>
 						<el-menu-item index="checkMemberRecord">查询记录</el-menu-item>
-						<!-- <el-menu-item index="foodList">食品列表</el-menu-item>
-						<el-menu-item index="orderList">订单列表</el-menu-item>
-						<el-menu-item index="adminList">管理员列表</el-menu-item> -->
 					</el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-plus"></i>公告管理</template>
 						<el-menu-item index="createNotice">新建/编辑公告</el-menu-item>
-						<!-- <el-menu-item index="addGoods">添加商品</el-menu-item> -->
 					</el-submenu>
 					<el-submenu index="4">
 						<template slot="title"><i class="el-icon-star-on"></i>竞答管理</template>
@@ -41,7 +37,7 @@
 						<template slot="title"><i class="el-icon-warning"></i>分享管理</template>
 						<el-menu-item index="checkShareDetail">查看详情</el-menu-item>
 						<el-menu-item index="coletFavManage">集赞管理</el-menu-item>
-						<el-menu-item index="plantsExgManage">绿植互送管理</el-menu-item>
+						<el-menu-item index="plantsExgManage">绿值互送管理</el-menu-item>
 						<el-menu-item index="treeSendManage">树苗赠送管理</el-menu-item>
 					</el-submenu>
 					<el-submenu index="9">
@@ -61,7 +57,7 @@
 					</el-submenu>
 				</el-menu>
 			</el-col>
-			<el-col :span="20" style="height: 100%;overflow: auto;">
+			<el-col :span="21" style="height: 100%;overflow: auto;">
 				<keep-alive>
 				    <router-view></router-view>
 				</keep-alive>
