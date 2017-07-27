@@ -1,12 +1,21 @@
 <template>
     <div id="app" class="fillcontain">
-		    <router-view></router-view>
+            <headTop></headTop>
+		    <router-view :style="{height:height}"></router-view>
     </div>
 </template>
 
 <script>
+import headTop from '@/components/headTop'
     export default {
-    	
+    	data(){
+           return {
+           	   height:window.innerHeight-60+'px'
+           }
+    	},
+    	components:{
+    		headTop,
+    	}
     }
 </script>
 
