@@ -10,7 +10,7 @@
                         <div class="turn-award-wrap">
                             <el-row class="chou-award-wrap bt">
                                 <el-col class="sub-title">抽奖设置</el-col>
-                                <el-col :span="10">
+                                <el-col :span="8">
                                     <el-form ref="form" :model="form" label-width="120px">
                                         <el-form-item label="总抽奖机会：">
                                             <el-radio-group v-model="form.resource">
@@ -36,7 +36,10 @@
                                             <el-input v-model="form.desc"></el-input>
                                         </el-form-item>
                                         <el-form-item label="奖品图片：">
-                                            <el-input type="textarea" v-model="form.desc"></el-input>
+                                            <el-upload class="avatar-uploader" action="//jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :default-file-list="fileList">
+                                                <el-button size="small" type="primary">点击上传</el-button>
+                                                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                            </el-upload>
                                         </el-form-item>
                                         <el-form-item label="奖品概率：">
                                             <el-input v-model="form.desc"></el-input>
@@ -112,7 +115,10 @@
                                             <el-input v-model="form.desc"></el-input>
                                         </el-form-item>
                                         <el-form-item label="奖品图片：">
-                                            <el-input type="textarea" v-model="form.desc"></el-input>
+                                            <el-upload class="avatar-uploader" action="//jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :default-file-list="fileList">
+                                                <el-button size="small" type="primary">点击上传</el-button>
+                                                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                                            </el-upload>
                                         </el-form-item>
                                         <el-form-item label="奖品概率：">
                                             <el-input v-model="form.desc"></el-input>
@@ -168,10 +174,11 @@
     </div>
 </template>
 <script>
-import { getUserList, getUserCount } from '@/api/getData'
+// import { getUserList, getUserCount } from '@/api/getData'
 export default {
     data() {
         return {
+            fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
             form: {
                 name: '',
                 region: '',
@@ -185,6 +192,12 @@ export default {
         }
     },
     methods: {
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        handlePreview(file) {
+            console.log(file);
+        },
         onSubmit() {
             console.log('submit!');
         }
