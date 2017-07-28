@@ -30,7 +30,7 @@
 						<el-menu-item index="taskEditor">任务编辑</el-menu-item>
 					</el-submenu>
 					<el-submenu index="7">
-						<template slot="title"><router-link to="secneManage"><i class="el-icon-warning"></i>道具管理</router-link></template>
+						<template slot="title"><router-link to="sceneManage"><i class="el-icon-warning"></i>道具管理</router-link></template>
 						<el-menu-item index="sceneSetting">道具设置</el-menu-item>
 					</el-submenu>
 					<el-submenu index="8">

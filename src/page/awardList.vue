@@ -1,54 +1,71 @@
 <template>
     <div class="fillcontain">
+        <div class="header-wrap bt">
+            <el-row>
+                <el-col :span="4" class="type-option">
+                    <label>奖品</label>
+                    <el-dropdown trigger="click" menu-align="start" @command="handleCommand">
+                        <span class="el-dropdown-link">
+                            {{dropdownText}}<i class="el-icon-caret-bottom el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="全部">全部</el-dropdown-item>
+                            <el-dropdown-item command="享币">享币</el-dropdown-item>
+                            <el-dropdown-item command="里程">里程</el-dropdown-item>
+                            <el-dropdown-item command="绿值">绿值</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </el-col>
+                <el-col :span="9" class="time-option">
+                    <label>获奖时间</label>
+                    <el-date-picker
+                      v-model="value1"
+                      type="date"
+                      placeholder="选择日期"
+                      :picker-options="pickerOptions0">
+                    </el-date-picker>
+                    <label>--</label>
+                    <el-date-picker
+                      v-model="value2"
+                      type="date"
+                      placeholder="选择日期"
+                      :picker-options="pickerOptions1">
+                    </el-date-picker>
+                </el-col>
+                <el-col :span="4" class="time-option">
+                    关键字
+                    <el-input class="inline-b3"></el-input>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-button type="success">查询</el-button>
+                <el-button type="danger">重置</el-button>
+            </el-row>
+        </div>
         <div class="table_container">
-            <el-table
-			    :data="tableData"
-			    @expand='expand'
-                :expand-row-keys='expendRow'
-                :row-key="row => row.index"
-			    style="width: 100%">
-			    <el-table-column type="expand">
-			      <template scope="props">
-			        <el-form label-position="left" inline class="demo-table-expand">
-			          <el-form-item label="用户名" >
-			            <span>{{ props.row.user_name }}</span>
-			          </el-form-item>
-			          <el-form-item label="店铺名称">
-			            <span>{{ props.row.restaurant_name }}</span>
-			          </el-form-item>
-			          <el-form-item label="收货地址">
-			            <span>{{ props.row.address }}</span>
-			          </el-form-item>
-			          <el-form-item label="店铺 ID">
-			            <span>{{ props.row.restaurant_id }}</span>
-			          </el-form-item>
-			          <el-form-item label="店铺地址">
-			            <span>{{ props.row.restaurant_address }}</span>
-			          </el-form-item>
-			        </el-form>
-			      </template>
-			    </el-table-column>
-			    <el-table-column
-			      label="订单 ID"
-			      prop="id">
-			    </el-table-column>
-			    <el-table-column
-			      label="总价格"
-			      prop="total_amount">
-			    </el-table-column>
-			    <el-table-column
-			      label="订单状态"
-			      prop="status">
-			    </el-table-column>
-			</el-table>
+            <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="user_name" label="会员ID">
+                </el-table-column>
+                <el-table-column prop="create_time" label="会员名称">
+                </el-table-column>
+                <el-table-column prop="city" label="奖品">
+                </el-table-column>
+                <el-table-column prop="admin" label="最近获奖时间">
+                </el-table-column>
+                <el-table-column prop="admin" label="券号">
+                </el-table-column>
+                <el-table-column prop="admin" label="兑奖方式">
+                </el-table-column>
+                <el-table-column prop="city" label="兑奖地址">
+                </el-table-column>
+                <el-table-column prop="" label="操作" inline-template>
+                    <span>
+                        <el-button type="text" size="small">查看详情</el-button>
+                    </span>
+                </el-table-column>
+            </el-table>
             <div class="Pagination" style="text-align: left;margin-top: 10px;">
-                <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="currentPage"
-                  :page-size="20"
-                  layout="total, prev, pager, next"
-                  :total="count">
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" layout="total, prev, pager, next" :total="count">
                 </el-pagination>
             </div>
         </div>
@@ -57,7 +74,7 @@
 
 <script>
     import headTop from '../components/headTop'
-    import {getOrderList, getOrderCount, getResturantDetail, getUserInfo, getAddressById} from '@/api/getData'
+    import {adminList, adminCount} from '@/api/getData'
     export default {
         data(){
             return {
@@ -67,30 +84,37 @@
                 limit: 20,
                 count: 0,
                 currentPage: 1,
-                restaurant_id: null,
-                expendRow: [],
+                dropdownText: '全部',
+                value1: '',
+                value2: '',
+                pickerOptions0: {
+                  disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                  }
+                },
+                pickerOptions1: {
+                  disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                  }
+                }
             }
         },
-    	components: {
-    		headTop,
-    	},
-        created(){
-        	this.restaurant_id = this.$route.query.restaurant_id;
-            this.initData();
+        components: {
+            headTop,
         },
-        mounted(){
-            
+        created(){
+            this.initData();
         },
         methods: {
             async initData(){
                 try{
-                    const countData = await getOrderCount({restaurant_id: this.restaurant_id});
+                    const countData = await adminCount();
                     if (countData.status == 1) {
                         this.count = countData.count;
                     }else{
                         throw new Error('获取数据失败');
                     }
-                    this.getOrders();
+                    this.getAdmin();
                 }catch(err){
                     console.log('获取数据失败', err);
                 }
@@ -101,57 +125,71 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
                 this.offset = (val - 1)*this.limit;
-                this.getOrders()
+                this.getAdmin()
             },
-            async getOrders(){
-                const Orders = await getOrderList({offset: this.offset, limit: this.limit, restaurant_id: this.restaurant_id});
-                this.tableData = [];
-                Orders.forEach((item, index) => {
-                    const tableData = {};
-                    tableData.id = item.id;
-                    tableData.total_amount = item.total_amount;
-                    tableData.status = item.status_bar.title;
-                    tableData.user_id = item.user_id;
- 					tableData.restaurant_id = item.restaurant_id;
- 					tableData.address_id = item.address_id;
-                    tableData.index = index;
-                    this.tableData.push(tableData);
-                })
-            },
-            async expand(row, status){
-            	if (status) {
-            		const restaurant = await getResturantDetail(row.restaurant_id);
-	            	const userInfo = await getUserInfo(row.user_id);
-	            	const addressInfo = await getAddressById(row.address_id);
+            handleCommand(command) {
+                this.dropdownText = command;
 
-	                this.tableData.splice(row.index, 1, {...row, ...{restaurant_name: restaurant.name, restaurant_address: restaurant.address, address: addressInfo.address, user_name: userInfo.username}}); 
-                    this.$nextTick(() => {
-                        this.expendRow.push(row.index);
-                    })	
-	            }else{
-                    const index = this.expendRow.indexOf(row.index);
-                    this.expendRow.splice(index, 1)
+                if (command == '全部订单') {
+                    this.url = '/static/jsonList/orderList.json';
+                } else if (command == '待处理订单') {
+                    this.url = '/static/jsonList/pendingOrderList.json';
+                } else if (command == '未完成订单') {
+                    this.url = '/static/jsonList/undoneOrderList.json';
+                } else if (command == '已完成订单') {
+                    this.url = '/static/jsonList/doneOrderList.json';
+                } else if (command == '已作废订单') {
+                    this.url = '/static/jsonList/voidedrderList.json';
                 }
+                this.getOrderList(this.url);
             },
+            async getAdmin(){
+                try{
+                    const res = await adminList({offset: this.offset, limit: this.limit});
+                    if (res.status == 1) {
+                        this.tableData = [];
+                        res.data.forEach(item => {
+                            const tableItem = {
+                                create_time: item.create_time,
+                                user_name: item.user_name,
+                                admin: item.admin,
+                                city: item.city,
+                            }
+                            this.tableData.push(tableItem)
+                        })
+                    }else{
+                        throw new Error(res.message)
+                    }
+                }catch(err){
+                    console.log('获取数据失败', err);
+                }
+            }
         },
     }
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+    @import '../style/mixin';
     .table_container{
         padding: 20px;
     }
-    .demo-table-expand {
-	    font-size: 0;
-	}
-	.demo-table-expand label {
-	    width: 90px;
-	    color: #99a9bf;
-	}
-	.demo-table-expand .el-form-item {
-	    margin-right: 0;
-	    margin-bottom: 0;
-	    width: 50%;
-	}
+    .go-back{
+        margin: 0 20px;
+        padding:10px 0;
+    }
+    .header-wrap{
+        margin: 0 20px;
+        padding: 5px 0px 20px 20px;
+        
+    }
+    .header-wrap label{
+        font-size: 15px;
+        margin-right: 5px;
+    }
+    .header-wrap .type-option{
+        height: 35px;
+        line-height: 35px;
+    }
 </style>
+
+
