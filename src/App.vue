@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="fillcontain">
-            <headTop></headTop>
+        <headTop></headTop>
 		    <router-view :style="{height:height}"></router-view>
     </div>
 </template>

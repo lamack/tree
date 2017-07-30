@@ -5,12 +5,15 @@
 		  		<div class="manage_tip">
 		  			<p>上汽植树后台管理系统</p>
 		  		</div>
-		    	<el-form :model="loginForm" :rules="rules" ref="loginForm">
-					<el-form-item prop="username">
+		    	<el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px">
+					<el-form-item prop="username" label="用户名：">
 						<el-input v-model="loginForm.username" placeholder="用户名"><span>dsfsf</span></el-input>
 					</el-form-item>
-					<el-form-item prop="password">
+					<el-form-item prop="password" label="密码：  ">
 						<el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
+					</el-form-item>
+					<el-form-item prop="password" label="验证码：">
+						<el-input type="password" placeholder="请输入验证码" v-model="loginForm.code"></el-input>
 					</el-form-item>
 					<el-form-item>
 				    	<el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登陆</el-button>
@@ -34,6 +37,7 @@
 				loginForm: {
 					username: '',
 					password: '',
+					code: ''
 				},
 				rules: {
 					username: [
@@ -41,6 +45,9 @@
 			        ],
 					password: [
 						{ required: true, message: '请输入密码', trigger: 'blur' }
+					],
+					code: [
+						{ required: true, message: '请输入验证码', trigger: 'blur' }
 					],
 				},
 				showLogin: false,
@@ -114,8 +121,8 @@
 		}
 	}
 	.form_contianer{
-		.wh(320px, 210px);
-		.ctp(320px, 210px);
+		.wh(320px, 240px);
+		.ctp(320px, 240px);
 		padding: 25px;
 		border-radius: 5px;
 		text-align: center;
@@ -135,5 +142,8 @@
 	.form-fade-enter, .form-fade-leave-active {
 	  	transform: translate3d(0, -50px, 0);
 	  	opacity: 0;
+	}
+	.el-input{
+		width: 240px;
 	}
 </style>
