@@ -7,7 +7,7 @@ class Index
     {
         $data = ['name'=>'thinkphp','url'=>'thinkphp.cn'];
         // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        return json(['data'=>$data,'code'=>1,'message'=>'操作完成111']);
     }
     //
     public function hello(){
