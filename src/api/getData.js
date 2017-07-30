@@ -1,10 +1,21 @@
 import fetch from '@/config/fetch'
+/**
+ * api v1.0
+ */
+
+/**
+ * 测试
+ */
+
+export const hello = data => fetch('/Index/index/hello', data);
+
+
 
 /**
  * 登陆
  */
 
-export const login = data => fetch('/admin/login', data, 'POST');
+export const login = data => fetch('/User/User/login', data, 'POST');
 
 /**
  * 退出

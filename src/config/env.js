@@ -12,6 +12,9 @@ let baseImgPath = 'http://images.cangdu.org/';
 
 if (process.env.NODE_ENV == 'development') {
 	//baseUrl = 'http://cangdu.org:8001';
+    // baseUrl = 'http://zg.tp.com:86/index.php';
+    baseUrl = 'http://saictree.innke.net/index.php';
+    
 }else{
 	baseUrl = 'http://cangdu.org:8001';
 }
