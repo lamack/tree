@@ -83,10 +83,10 @@ const routes = [
 		path: '/manage',
 		component: manage,
 		name: '',
-		children: [{
+		children: [/*{
 			path: '',
 			component: home,
-		},{
+		},*/{
 			path: '/memberManage',
 			component: memberManage,
 		},{

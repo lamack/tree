@@ -8,11 +8,15 @@ const state = {
 	adminInfo: {
 		avatar: 'default.jpg'
 	},
+	flagTop:true,
 }
 
 const mutations = {
 	saveAdminInfo(state, adminInfo){
 		state.adminInfo = adminInfo;
+	},
+	changeflag(state){
+        state.flagTop = false
 	}
 }
 
