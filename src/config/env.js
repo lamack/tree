@@ -13,8 +13,9 @@ let baseImgPath = 'http://images.cangdu.org/';
 if (process.env.NODE_ENV == 'development') {
 	// baseUrl = 'http://cangdu.org:8001';
     // baseUrl = 'http://zg.tp.com:86/index.php';
-    // baseUrl = 'http://saictree.innke.net/index.php';
-    baseUrl = 'http://tree.com/index.php';
+    baseUrl = 'http://saictree.innke.net:8081/index.php';
+    // baseUrl = 'http://tree.com/index.php'; 配置的本地php环境
+    // 
     
 }else{
 	baseUrl = 'http://saictree.innke.net';
