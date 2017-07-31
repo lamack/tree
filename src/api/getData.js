@@ -17,13 +17,13 @@ export const login = data => fetch('/user/user/login', data, 'POST');
  */
 
 // 会员列表
-export const memberList = data => fetch('/member/menber/index', data);
+export const memberList = data => fetch('/member/member/index', data);
 
 // 会员获得纪录
-export const memberRecode = data => fetch('/member/menber/recode', data);
+export const memberRecode = data => fetch('/member/member/recode', data);
 
 // 会员信息
-export const memberInfo = data => fetch('/member/menber/info', data);
+export const memberInfo = data => fetch('/member/member/info', data);
 
 
 // 灾害接口

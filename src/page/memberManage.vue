@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <div class="go-back bt">
-            <el-button type="primary">返回</el-button>
+            <el-button type="primary" size="small">返回</el-button>
         </div>
         <div class="header-wrap bt">
             <el-row>
@@ -53,8 +53,8 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-button type="success">查询</el-button>
-                <el-button type="danger">重置</el-button>
+                <el-button type="success" @click="queryClick">查询</el-button>
+                <el-button type="danger" @click="resetClick">重置</el-button>
             </el-row>
         </div>
         <div class="table_container">
@@ -92,8 +92,7 @@
     </div>
 </template>
 <script>
-import headTop from '../components/headTop'
-import { adminList, adminCount } from '@/api/getData'
+import { memberList, memberRecode, memberInfo } from '@/api/getData'
 export default {
     data() {
         return {
@@ -118,22 +117,18 @@ export default {
             }
         }
     },
-    components: {
-        headTop,
-    },
     created() {
         this.initData();
     },
     methods: {
         async initData() {
             try {
-                const countData = await adminCount();
-                if (countData.status == 1) {
-                    this.count = countData.count;
+                const memberListData = await memberList();
+                if (memberListData.code == 1) {
+                    this.tableData = memberListData.data;
                 } else {
                     throw new Error('获取数据失败');
                 }
-                this.getAdmin();
             } catch (err) {
                 console.log('获取数据失败', err);
             }
@@ -162,26 +157,11 @@ export default {
             }
             this.getOrderList(this.url);
         },
-        async getAdmin() {
-            try {
-                const res = await adminList({ offset: this.offset, limit: this.limit });
-                if (res.status == 1) {
-                    this.tableData = [];
-                    res.data.forEach(item => {
-                        const tableItem = {
-                            create_time: item.create_time,
-                            user_name: item.user_name,
-                            admin: item.admin,
-                            city: item.city,
-                        }
-                        this.tableData.push(tableItem)
-                    })
-                } else {
-                    throw new Error(res.message)
-                }
-            } catch (err) {
-                console.log('获取数据失败', err);
-            }
+        queryClick(){
+
+        },
+        resetClick(){
+
         }
     },
 }
