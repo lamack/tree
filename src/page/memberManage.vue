@@ -1,90 +1,74 @@
 <template>
     <div class="fillcontain">
-        <div class="go-back bt">
-            <el-button type="primary" size="small">返回</el-button>
-        </div>
         <div class="header-wrap bt">
-            <el-row>
-                <el-col :span="4" class="type-option">
-                    <label>区域</label>
-                    <el-dropdown trigger="click" menu-align="start" @command="handleCommand">
-                        <span class="el-dropdown-link">
-	                        {{dropdownText}}<i class="el-icon-caret-bottom el-icon--right"></i>
-	                    </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="全部">全部</el-dropdown-item>
-                            <el-dropdown-item command="享币">黄浦区</el-dropdown-item>
-                            <el-dropdown-item command="里程">普陀区</el-dropdown-item>
-                            <el-dropdown-item command="绿值">徐汇区</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </el-col>
-                <el-col :span="4" class="time-option">
-                    <label>企业</label>
-                    <el-dropdown trigger="click" menu-align="start" @command="handleCommand">
-                        <span class="el-dropdown-link">
-	                        {{dropdownText}}<i class="el-icon-caret-bottom el-icon--right"></i>
-	                    </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="全部">全部</el-dropdown-item>
-                            <el-dropdown-item command="享币">黄浦区</el-dropdown-item>
-                            <el-dropdown-item command="里程">普陀区</el-dropdown-item>
-                            <el-dropdown-item command="绿值">徐汇区</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </el-col>
-                <el-col :span="4" class="time-option">
-                    <label>班组</label>
-                    <el-dropdown trigger="click" menu-align="start" @command="handleCommand">
-                        <span class="el-dropdown-link">
-	                        {{dropdownText}}<i class="el-icon-caret-bottom el-icon--right"></i>
-	                    </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="全部">全部</el-dropdown-item>
-                            <el-dropdown-item command="享币">黄浦区</el-dropdown-item>
-                            <el-dropdown-item command="里程">普陀区</el-dropdown-item>
-                            <el-dropdown-item command="绿值">徐汇区</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                </el-col>
-                <el-col :span="4" class="time-option">
-                    关键字
-                    <el-input v-model="form" class="inline-b3"></el-input>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-button type="success" @click="queryClick">查询</el-button>
-                <el-button type="danger" @click="resetClick">重置</el-button>
-            </el-row>
+            <el-form :model="validateForm" ref="validateForm" label-width="60px" class="demo-ruleForm" label-position="left">
+                <el-row :gutter="10">
+                    <el-col :span="5" class="type-option">
+                        <el-form-item label="区域" prop="areaValue">
+                            <el-select v-model="validateForm.areaValue" placeholder="请选择" @change="handleAreaValue">
+                                <el-option v-for="item in validateForm.areaOptions" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="5" class="type-option">
+                        <el-form-item label="企业" prop="companyValue">
+                            <el-select v-model="validateForm.companyValue" placeholder="请选择" @change="handleCompanyValue">
+                                <el-option v-for="item in validateForm.companyOptions" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="5" class="type-option">
+                        <el-form-item label="班组" prop="classValue">
+                            <el-select v-model="validateForm.classValue" placeholder="请选择" @change="handleClassValue">
+                                <el-option v-for="item in validateForm.classOptions" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" class="type-option">
+                        <el-form-item label="关键字" prop="keyWords">
+                            <el-input v-model="validateForm.keyWords" class="input-b3" placeholder="请输入关键字搜索"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row class="btn-options">
+                    <el-form-item>
+                        <el-button type="primary" size="small" @click="queryClick">查询</el-button>
+                        <el-button type="primary" size="small" @click="resetForm('validateForm')">重置</el-button>
+                    </el-form-item>
+                </el-row>
+            </el-form>
         </div>
         <div class="table_container">
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="user_name" label="会员ID">
+            <el-table :data="tableData" style="width: 100%" header-align="center">
+                <el-table-column prop="id" label="会员ID" align="center">
                 </el-table-column>
-                <el-table-column prop="create_time" label="会员名称">
+                <el-table-column prop="username" label="会员名称">
                 </el-table-column>
-                <el-table-column prop="city" label="所在区域">
+                <el-table-column prop="area" label="所在区域">
                 </el-table-column>
-                <el-table-column prop="admin" label="所在企业">
+                <el-table-column prop="company" label="所在企业">
                 </el-table-column>
-                <el-table-column prop="admin" label="所在班组">
+                <el-table-column prop="class" label="所在班组">
                 </el-table-column>
-                <el-table-column prop="admin" label="当前里程数">
+                <el-table-column prop="mileage" label="当前里程数">
                 </el-table-column>
-                <el-table-column prop="admin" label="当前绿值">
+                <el-table-column prop="green" label="当前绿值">
                 </el-table-column>
-                <el-table-column prop="admin" label="当前享币">
+                <el-table-column prop="share" label="当前享币">
                 </el-table-column>
-                <el-table-column prop="admin" label="树苗总数">
+                <el-table-column prop="trees" label="树苗总数">
                 </el-table-column>
                 <el-table-column prop="" label="操作" inline-template>
                     <span>
-				        <el-button type="text" size="small">查看详情</el-button>
-				        <el-button type="text" size="small">查询记录</el-button>
-				    </span>
+                        <el-button type="text" size="small">查看详情</el-button>
+                        <el-button type="text" size="small">查询记录</el-button>
+                    </span>
                 </el-table-column>
             </el-table>
-            <div class="Pagination" style="text-align: left;margin-top: 10px;">
+            <div class="Pagination" style="text-align: right;margin-top: 10px;">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" layout="total, prev, pager, next" :total="count">
                 </el-pagination>
             </div>
@@ -102,19 +86,62 @@ export default {
             limit: 20,
             count: 0,
             currentPage: 1,
-            dropdownText: '全部',
-            value1: '',
-            value2: '',
-            pickerOptions0: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
+            params: {},
+            validateForm: {
+                areaValue: '',
+                companyValue: '',
+                classValue: '',
+                keyWords: '',
+                areaOptions: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                companyOptions: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                classOptions: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
             },
-            pickerOptions1: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
-            }
+
         }
     },
     created() {
@@ -123,9 +150,22 @@ export default {
     methods: {
         async initData() {
             try {
-                const memberListData = await memberList();
-                if (memberListData.code == 1) {
-                    this.tableData = memberListData.data;
+                const responseData = await memberList();
+                if (responseData.code == 1) {
+                    this.tableData = responseData.data;
+                } else {
+                    throw new Error('获取数据失败');
+                }
+            } catch (err) {
+                console.log('获取数据失败', err);
+            }
+        },
+        async getMemberRecode() {
+            try {
+
+                const responseData = await memberRecode(this.params);
+                if (responseData.code == 1) {
+                    this.tableData = responseData.data;
                 } else {
                     throw new Error('获取数据失败');
                 }
@@ -141,27 +181,42 @@ export default {
             this.offset = (val - 1) * this.limit;
             this.getAdmin()
         },
-        handleCommand(command) {
-            this.dropdownText = command;
-
-            if (command == '全部订单') {
-                this.url = '/static/jsonList/orderList.json';
-            } else if (command == '待处理订单') {
-                this.url = '/static/jsonList/pendingOrderList.json';
-            } else if (command == '未完成订单') {
-                this.url = '/static/jsonList/undoneOrderList.json';
-            } else if (command == '已完成订单') {
-                this.url = '/static/jsonList/doneOrderList.json';
-            } else if (command == '已作废订单') {
-                this.url = '/static/jsonList/voidedrderList.json';
-            }
-            this.getOrderList(this.url);
+        handleAreaValue(value) {
+            console.log(value);
+            let obj = {};
+            obj = this.validateForm.areaOptions.find((item) => {
+                return item.value === value;
+            });
+            this.params.area = value;
+            console.log(obj.label);
         },
-        queryClick(){
-
+        handleCompanyValue(value) {
+            console.log(value);
+            let obj = {};
+            obj = this.validateForm.companyOptions.find((item) => {
+                return item.value === value;
+            });
+            this.params.company = value;
+            console.log(obj.label);
         },
-        resetClick(){
+        handleClassValue(value) {
+            console.log(value);
+            let obj = {};
+            obj = this.validateForm.classOptions.find((item) => {
+                return item.value === value;
+            });
+            this.params.class = value;
+            console.log(obj.label);
+        },
+        queryClick() {
+            this.params.keyWords = this.validateForm.keyWords;
+            console.log(this.validateForm.keyWords);
+            console.log(this.params);
 
+            this.getMemberRecode();
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
         }
     },
 }
@@ -179,8 +234,8 @@ export default {
 }
 
 .header-wrap {
-    margin: 0 20px;
-    padding: 5px 0px 20px 20px;
+    margin: 0px 20px;
+    padding-top: 20px;
 }
 
 .header-wrap label {
@@ -191,6 +246,10 @@ export default {
 .header-wrap .type-option {
     height: 35px;
     line-height: 35px;
+}
+
+.btn-options {
+    margin-top: 15px;
 }
 
 </style>
