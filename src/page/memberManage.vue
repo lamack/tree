@@ -27,7 +27,7 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="6" class="type-option">
+                    <el-col :span="5" class="type-option">
                         <el-form-item label="关键字" prop="keyWords">
                             <el-input v-model="validateForm.keyWords" class="input-b3" placeholder="请输入关键字搜索"></el-input>
                         </el-form-item>
@@ -36,7 +36,7 @@
                 <el-row class="btn-options">
                     <el-form-item>
                         <el-button type="primary" size="small" @click="queryClick">查询</el-button>
-                        <el-button type="primary" size="small" @click="resetForm('validateForm')">重置</el-button>
+                        <el-button type="danger" size="small" @click="resetForm('validateForm')">重置</el-button>
                     </el-form-item>
                 </el-row>
             </el-form>
@@ -240,7 +240,6 @@ export default {
 
 .header-wrap label {
     font-size: 15px;
-    margin-right: 5px;
 }
 
 .header-wrap .type-option {
