@@ -3,14 +3,43 @@ namespace app\Adv\controller;
 use \think\Request;
 class Adv
 {
+    private $_advSt = array('启用','停用');
+    private $_advTp = array('游戏介绍','游戏公告');
+
+    //announcement
     public function announcement()
     {
         $request = Request::instance();
-
-        $data = ['id'=>'1','create_time'=>'1501403946','adv_content'=>'test','adv_title'=>'test','adv_type'=>'游戏介绍','adv_status'=>'启用'];
+        $params = $request->param();
+        
+        $announcement_db = db('announcement');
+        $data = $announcement_db->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['adv_status'] = $this->_advSt[$value['adv_status']];
+            $data[$key]['adv_type'] = $this->_advTp[$value['adv_type']];
+            $data[$key]['create_time'] = date('Y-m-d',$value['create_time']);
+        }
         // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        return apiResponse($data);
     }
 
+    //add
+    public function add()
+    {
+        $request = Request::instance();
+        $params = $request->param();
+        $params['create_time'] = time();
+
+        $announcement_db = db('announcement');
+        $data = $announcement_db->insert($params);
+        if ($data) {
+            $data = ['status'=>'succ'];
+            return apiResponse($data); 
+        }else{
+            $data = ['status'=>'error', 'msg'=>'添加失败'];
+            return apiResponse($data);
+        }
+        
+    }
    
 }

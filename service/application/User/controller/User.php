@@ -4,6 +4,8 @@ use \think\Request;
 use think\captcha\Captcha;
 class User
 {
+
+    //login
     public function login()
     {
         //params
@@ -48,61 +50,166 @@ class User
         return $captcha->entry(); 
     }
 
-    public function index()
-    {
-        $request = Request::instance();
-
-        $data = [];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
-    }  
-    public function userinfo()
-    {
-        $request = Request::instance();
-
-        $data = [];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
-    }
-    public function userupdate()
+    //logout
+    public function logout()
     {
         $request = Request::instance();
 
         $data = ['status'=>'succ'];
+        return apiResponse($data);
+    } 
+
+    //index
+    public function index()
+    {
+        $request = Request::instance();
+        $params = $request->param();
+        
+        $user_db = db('user');
+        $data = $user_db->field('id,username,create_time')->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['create_time'] = date('Y-m-d',$value['create_time']);
+        }
         // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        return apiResponse($data);
+    }  
+    //userinfo
+    public function userinfo()
+    {
+        $request = Request::instance();
+        $params = $request->param();
+
+        $user_db = db('user');
+        $data = $user_db->field('id,username,create_time,role')->where('id',intval($params['id']))->find();
+        $data['create_time'] = date('Y-m-d',$data['create_time']);
+        
+        // 指定json数据输出
+        return apiResponse($data);
     }
+    //userupdate
+    public function userupdate()
+    {
+        $request = Request::instance();
+        $params = $request->param();
+        
+        $user_db = db('user');
+        $data = $user_db->where('id',intval($params['id']))->update(['role'=>$params['role']]);
+        if ($data) {
+            $data = ['status'=>'succ'];
+            return apiResponse($data);
+        }else{
+            $data = ['status'=>'error', 'msg'=>'更新失败'];
+            return apiResponse($data);
+        }
+    }
+
+    //uppw
     public function uppw()
     {
         $request = Request::instance();
 
-        $data = ['status'=>'succ'];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        $params = $request->param();
+        
+        $user_db = db('user');
+        $data = $user_db->where('id',intval($params['id']))->update(['password'=>md5($params['password'])]);
+        if ($data) {
+            $data = ['status'=>'succ'];
+            return apiResponse($data);
+        }else{
+            $data = ['status'=>'error', 'msg'=>'更新失败'];
+            return apiResponse($data);
+        }
     }
+
+    //add
     public function add()
     {
         $request = Request::instance();
+        $params = $request->param();
+        
+        $params['create_time'] = time();
+        $params['password'] = md5($params['password']);
 
-        $data = ['status'=>'succ'];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        $user_db = db('user');
+        $data = $user_db->insert($params);
+        if ($data) {
+            $data = ['status'=>'succ'];
+            return apiResponse($data); 
+        }else{
+            $data = ['status'=>'error', 'msg'=>'添加失败'];
+            return apiResponse($data);
+        }
     }
+
+    //roleadd
     public function roleadd()
     {
         $request = Request::instance();
+        $params = $request->param();
+        
+        $params['create_time'] = time();
 
-        $data = ['status'=>'succ'];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        $role_db = db('role');
+        $data = $role_db->insert($params);
+        if ($data) {
+            $data = ['status'=>'succ'];
+            return apiResponse($data); 
+        }else{
+            $data = ['status'=>'error', 'msg'=>'添加失败'];
+            return apiResponse($data);
+        }
     } 
+
+    //role
     public function role()
     {
         $request = Request::instance();
+        $params = $request->param();
 
-        $data = [];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        //menu
+        $menu = db('menu')->where('status','0')->select();
+        //rule
+        $rule = db('rule')->where('role_id',$params['role_id'])->find();
+
+        $res = [];
+        $i = 0;
+        //存在 menu_name id is_check parent children
+        if ($rule) {
+            foreach ($menu as $key => $value) {
+                if($value['is_parent']==0){
+                    $res[$value['id']]['name'] = $value['menu_name'];
+                    $res[$value['id']]['id'] = $value['id'];
+                    if (in_array($value['id'], $rule['rule'])) {
+                        $res[$value['id']]['is_check'] = 1;
+                    }
+                }else{
+                    $i++;
+                    $res[$value['parent_id']]['children'][$i]['name'] = $value['menu_name'];
+                    $res[$value['parent_id']]['children'][$i]['id'] = $value['id'];
+                    if (in_array($value['id'], $rule['rule'])) {
+                        $res[$value['parent_id']]['children'][$i]['is_check'] = 1;
+                    }
+                    
+                }
+            }
+        }else{
+            foreach ($menu as $key => $value) {
+                if($value['is_parent']==0){
+                    $res[$value['id']]['name'] = $value['menu_name'];
+                    $res[$value['id']]['id'] = $value['id'];
+                    $res[$value['id']]['is_check'] = 0;
+                }else{
+                    $i++;
+                    $res[$value['parent_id']]['children'][$i]['name'] = $value['menu_name'];
+                    $res[$value['parent_id']]['children'][$i]['id'] = $value['id'];
+                    $res[$value['parent_id']]['children'][$i]['is_check'] = 0;
+                    
+                }
+            }
+        }
+        $result = array_values($res);
+        return apiResponse($result);
+        
     } 
    
 }

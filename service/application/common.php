@@ -45,4 +45,11 @@ function apiResponse($data){
 
     return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);;
 }
-
+function _getUserName($uid){
+    if (!$uid) {
+        return '';
+    }
+    $user_db = db('user');
+    $data = $user_db->field('username')->where('id',$uid)->find();
+    return $data['username'];
+}
