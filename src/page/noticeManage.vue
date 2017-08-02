@@ -1,8 +1,5 @@
 <template>
     <div class="fillcontain">
-        <div class="go-back bt">
-            <el-button type="primary" size="small">返回</el-button>
-        </div>
         <div class="header-wrap bt">
             <el-form :model="validateForm" ref="validateForm" class="demo-ruleForm" label-position="left">
                 <el-row :gutter="10">
@@ -16,10 +13,10 @@
                     </el-col>
                     <el-col :span="12" class="type-option">
                         <el-form-item label="创建时间" prop="companyValue" label-width="80px">
-                            <el-date-picker v-model="validateForm.date1" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
+                            <el-date-picker v-model="validateForm.date1" type="date" placeholder="选择日期"  @change="handleBeginDate">
                             </el-date-picker>
                             <label>--</label>
-                            <el-date-picker v-model="validateForm.date2" type="date" placeholder="选择日期" :picker-options="pickerOptions1">
+                            <el-date-picker v-model="validateForm.date2" type="date" placeholder="选择日期" @change="handleEndDate">
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -38,7 +35,7 @@
             </el-form>
         </div>
         <div class="table_container">
-            <el-button type="primary" size="small">新建公告</el-button>
+            <el-button type="primary" size="small" @click="newNoticeClick">新建公告</el-button>
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="user_name" label="编号">
                 </el-table-column>
@@ -60,7 +57,7 @@
                     </span>
                 </el-table-column>
             </el-table>
-            <div class="Pagination" style="text-align: left;margin-top: 10px;">
+            <div class="Pagination" style="text-align: right;margin-top: 10px;">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" layout="total, prev, pager, next" :total="count">
                 </el-pagination>
             </div>
@@ -68,8 +65,7 @@
     </div>
 </template>
 <script>
-import headTop from '../components/headTop'
-import { adminList, adminCount } from '@/api/getData'
+import { adv } from '@/api/getData'
 export default {
     data() {
         return {
@@ -79,6 +75,7 @@ export default {
             limit: 20,
             count: 0,
             currentPage: 1,
+            params: {},
             validateForm: {
                 typeValue: '',
                 typeOptions: [{
@@ -99,19 +96,54 @@ export default {
                 }],
                 date1: '',
                 date2: '',
+                keyWords: '',
             },
         }
     },
-    components: {
-        headTop,
+    beforeCreate() {
+        console.log('beforeCreate');
     },
     created() {
+        console.log('create');
         this.initData();
     },
+    beforeMount() {
+        console.log('beforeMount');
+        this.initData();
+    },
+    mounted() {
+        console.log('mounted');
+        this.initData();
+    },
+    beforeUpdate() {
+        console.log('beforeUpdate');
+        this.initData();
+    },
+    updated() {
+        console.log('updated');
+        this.initData();
+    },
+    activated() {
+        console.log('activated');
+        this.initData();
+    },
+    deactivated() {
+        console.log('deactivated');
+        this.initData();
+    },
+    beforeDestroy() {
+        console.log('beforeDestroy');
+        this.initData();
+    },
+    destroyed() {
+        console.log('destroyed');
+        this.initData();
+    },
+    
     methods: {
         async initData() {
             try {
-                const countData = await adminCount();
+                const countData = await adv();
                 if (countData.status == 1) {
                     this.count = countData.count;
                 } else {
@@ -130,21 +162,35 @@ export default {
             this.offset = (val - 1) * this.limit;
             this.getAdmin()
         },
-        handleCommand(command) {
-            this.dropdownText = command;
+        handleTypeValue(value){
+            console.log(value);
+            let obj = {};
+            obj = this.validateForm.typeOptions.find((item) => {
+                return item.value === value;
+            });
+            this.params.typeValue = value;
+            console.log(obj.label);
+        },
+        handleBeginDate(value){
+            console.log(value);
+            this.params.beginDate = value;
+        },
+        handleEndDate(value){
+            console.log(value);
+            this.params.endDate = value;
+        },
+        newNoticeClick(){
+            this.$router.push('createNotice');
+        },
+        queryClick() {
+            this.params.keyWords = this.validateForm.keyWords;
+            console.log(this.validateForm.keyWords);
+            console.log(this.params);
 
-            if (command == '全部订单') {
-                this.url = '/static/jsonList/orderList.json';
-            } else if (command == '待处理订单') {
-                this.url = '/static/jsonList/pendingOrderList.json';
-            } else if (command == '未完成订单') {
-                this.url = '/static/jsonList/undoneOrderList.json';
-            } else if (command == '已完成订单') {
-                this.url = '/static/jsonList/doneOrderList.json';
-            } else if (command == '已作废订单') {
-                this.url = '/static/jsonList/voidedrderList.json';
-            }
-            this.getOrderList(this.url);
+            // this.getMemberRecode();
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
         },
         async getAdmin() {
             try {
@@ -199,5 +245,7 @@ export default {
 .btn-options {
     margin-top: 15px;
 }
-
+.el-button{
+    margin-bottom: 10px;
+}
 </style>
