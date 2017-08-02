@@ -6,13 +6,34 @@ class User
 {
     public function login()
     {
+        //params
         $request = Request::instance();
+        $params = $request->param();
 
-        $data = ['status'=>'succ'];
-        // 指定json数据输出
-        return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);
+        //vail
+        $captcha = new Captcha();
+        if (!$captcha->check($params['code'])) {
+            $data = ['status'=>'error','msg'=>'验证码错误'];
+            return apiResponse($data);
+        }
+
+        $user_db = db('user');
+        $user = $user_db->where('username', $params['username'])->find();
+        if (!$user) {
+            $data = ['status'=>'error','msg'=>'未找到该账号'];
+            return apiResponse($data);
+        }
+        if($user['password']!=md5($params['password'])){
+            $data = ['status'=>'error','msg'=>'密码不正确'];
+            return apiResponse($data);
+        }
+        
+        $token = encrypt($user['id']);
+        $data = ['status'=>'succ','msg'=>'', 'token'=>$token];
+        return apiResponse($data);
     }
 
+    //code
     public function code()
     {
         $config =    [

@@ -40,3 +40,9 @@ function decrypt($str) {
 
     return unserialize($str); 
 } 
+
+function apiResponse($data){
+
+    return json(['data'=>$data,'code'=>1,'message'=>'操作完成']);;
+}
+
