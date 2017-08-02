@@ -35,26 +35,26 @@
             </el-form>
         </div>
         <div class="table_container">
-            <el-button type="primary" size="small" @click="newNoticeClick">新建公告</el-button>
+            <el-button class="create-notice-btn" type="primary" size="small" @click="newNoticeClick">新建公告</el-button>
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="user_name" label="编号">
+                <el-table-column prop="id" label="编号">
                 </el-table-column>
-                <el-table-column prop="create_time" label="公告类型">
+                <el-table-column prop="adv_type" label="公告类型">
                 </el-table-column>
-                <el-table-column prop="city" label="标题">
+                <el-table-column prop="adv_title" label="标题">
                 </el-table-column>
-                <el-table-column prop="admin" label="内容预览">
+                <el-table-column prop="adv_content" label="内容预览">
                 </el-table-column>
-                <el-table-column prop="admin" label="创建时间">
+                <el-table-column prop="create_time" label="创建时间">
                 </el-table-column>
-                <el-table-column prop="admin" label="状态">
+                <el-table-column prop="adv_status" label="状态" header-align="center">
                 </el-table-column>
-                <el-table-column prop="" label="操作" inline-template>
-                    <span>
+                <el-table-column prop="" label="操作" inline-template header-align="center" width="180">
+                    <template scoped="scoped">
                         <el-button type="text" size="small">停用</el-button>
                         <el-button type="text" size="small">查看编辑</el-button>
                         <el-button type="text" size="small">删除</el-button>
-                    </span>
+                    </template>
                 </el-table-column>
             </el-table>
             <div class="Pagination" style="text-align: right;margin-top: 10px;">
@@ -109,47 +109,39 @@ export default {
     },
     beforeMount() {
         console.log('beforeMount');
-        this.initData();
     },
     mounted() {
         console.log('mounted');
-        this.initData();
     },
     beforeUpdate() {
         console.log('beforeUpdate');
-        this.initData();
     },
     updated() {
         console.log('updated');
-        this.initData();
     },
     activated() {
         console.log('activated');
-        this.initData();
     },
     deactivated() {
         console.log('deactivated');
-        this.initData();
     },
     beforeDestroy() {
         console.log('beforeDestroy');
-        this.initData();
     },
     destroyed() {
         console.log('destroyed');
-        this.initData();
     },
     
     methods: {
         async initData() {
             try {
-                const countData = await adv();
-                if (countData.status == 1) {
-                    this.count = countData.count;
+                const responseData = await adv();
+                console.log(responseData);
+                if (responseData.code == '1') {
+                    this.tableData = responseData.data;
                 } else {
                     throw new Error('获取数据失败');
                 }
-                this.getAdmin();
             } catch (err) {
                 console.log('获取数据失败', err);
             }
@@ -245,7 +237,7 @@ export default {
 .btn-options {
     margin-top: 15px;
 }
-.el-button{
+.create-notice-btn{
     margin-bottom: 10px;
 }
 </style>
