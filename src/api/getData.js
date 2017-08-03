@@ -35,7 +35,7 @@ export const disasterSet = data => fetch('/disaster/disaster/disaster_setting', 
 // 道具列表
 export const prop = data => fetch('/prop/prop/index', data);
 // 道具设置
-export const propSet = data => fetch('/prop/prop/pros_setting', data,'POST');
+export const propSet = data => fetch('/prop/prop/prop_setting', data,'POST');
 
 // 转盘
 export const wheel = data => fetch('/wheel/wheel/reward', data);
