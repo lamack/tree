@@ -94,6 +94,9 @@ export const taskSet = data => fetch('/task/task/task_setting', data,'POST');
 //获得公告
 export const adv = data => fetch('/adv/adv/announcement', data);
 
+// 添加公告
+export const advAdd = data => fetch('/adv/adv/add', data);
+
 /**
  * 退出
  */

@@ -28,14 +28,14 @@
                 </el-row>
                 <el-row class="btn-options">
                     <el-form-item>
-                        <el-button type="primary" size="small" @click="queryClick">查询</el-button>
-                        <el-button type="danger" size="small" @click="resetForm('validateForm')">重置</el-button>
+                        <el-button type="primary" @click="queryClick">查询</el-button>
+                        <el-button type="danger"  @click="resetForm('validateForm')">重置</el-button>
                     </el-form-item>
                 </el-row>
             </el-form>
         </div>
         <div class="table_container">
-            <el-button class="create-notice-btn" type="primary" size="small" @click="newNoticeClick">新建公告</el-button>
+            <el-button class="create-notice-btn" type="primary"  @click="newNoticeClick">新建公告</el-button>
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="id" label="编号">
                 </el-table-column>
