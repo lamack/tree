@@ -1,6 +1,6 @@
 <template>
     <div class="fillcontain">
-        <div class="header-wrap bt">
+        <div class="header-wrap bb">
             <el-form :model="validateForm" ref="validateForm" label-width="60px" class="demo-ruleForm" label-position="left">
                 <el-row :gutter="10">
                     <el-col :span="5" class="type-option">
@@ -35,8 +35,8 @@
                 </el-row>
                 <el-row class="btn-options">
                     <el-form-item>
-                        <el-button type="primary" size="small" @click="queryClick">查询</el-button>
-                        <el-button type="danger" size="small" @click="resetForm('validateForm')">重置</el-button>
+                        <el-button type="primary" @click="queryClick">查询</el-button>
+                        <el-button type="danger" @click="resetForm('validateForm')">重置</el-button>
                     </el-form-item>
                 </el-row>
             </el-form>

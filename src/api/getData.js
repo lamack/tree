@@ -42,19 +42,19 @@ export const wheel = data => fetch('/wheel/wheel/reward', data);
 // 果实
 export const furit = data => fetch('/furit/furit/reward', data);
 // 转盘奖品设置
-export const wheelSet = data => fetch('/wheel/wheel/setting', data,'POST');
+export const wheelSet = data => fetch('/wheel/wheel/wheel_setting', data,'POST');
 // 果实设置
-export const furitSet = data => fetch('/furit/furit/furit_setting', data,'POST');
+export const fruitSet = data => fetch('/fruit/fruit/fruit_setting', data,'POST');
 // 获奖用户
 export const rewardUser = data => fetch('/reward/reward/user', data);
 // 获取用户详情
-export const rewardDetial = data => fetch('/reward/reward/userdetail', data);
+export const rewardDetial = data => fetch('/reward/reward/user_detail', data);
 
 
 //竞答题库
 export const vie = data => fetch('/vie/vie/index', data);
 //竞答设置接口
-export const vieSet = data => fetch('/vie/vie/setting', data,'POST');
+export const vieSet = data => fetch('/vie/vie/vie_setting', data,'POST');
 
 
 //获得分享接口

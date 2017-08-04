@@ -13,10 +13,10 @@
 						<template slot="title"><router-link to="noticeManage"><i class="el-icon-plus"></i>公告管理</router-link></template>
 						<el-menu-item index="createNotice">新建/编辑公告</el-menu-item>
 					</el-submenu>
-					<!-- <el-submenu index="4">
+					<el-submenu index="4">
 						<template slot="title"><router-link to="quizzesManage"><i class="el-icon-star-on"></i>竞答管理</router-link></template>
 						<el-menu-item index="quizzesSetting">竞答设置</el-menu-item>
-					</el-submenu> -->
+					</el-submenu>
 					<el-submenu index="5">
 						<template slot="title"><router-link to="awardManage"><i class="el-icon-edit"></i>抽奖管理</router-link></template>
 						<el-menu-item index="awardSetting">奖品设置</el-menu-item>

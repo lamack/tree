@@ -8,16 +8,19 @@
                 <el-tab-pane label="转盘抽奖">
                     <template>
                         <div class="table_container">
-                            <el-table :data="tableData" style="width: 100%">
-                                <el-table-column prop="user_name" label="编号">
+                            <el-table :data="turnTableData" style="width: 100%">
+                                <el-table-column prop="id" label="编号">
                                 </el-table-column>
-                                <el-table-column prop="create_time" label="奖品名称">
+                                <el-table-column prop="reward" label="奖品名称">
                                 </el-table-column>
-                                <el-table-column prop="city" label="奖品图片">
+                                <el-table-column prop="reward_pic" label="奖品图片">
+                                    <template scope="scope">
+                                        <img :src="scope.row.reward_pic">
+                                    </template>
                                 </el-table-column>
-                                <el-table-column prop="admin" label="获奖概率">
+                                <el-table-column prop="reward_chance" label="获奖概率">
                                 </el-table-column>
-                                <el-table-column prop="admin" label="剩余数量">
+                                <el-table-column prop="reward_num" label="剩余数量">
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -26,16 +29,19 @@
                 <el-tab-pane label="果实抽奖">
                     <template>
                         <div class="table_container">
-                            <el-table :data="tableData" style="width: 100%">
-                                <el-table-column prop="user_name" label="编号">
+                            <el-table :data="fruitTableData" style="width: 100%">
+                                <el-table-column prop="id" label="编号">
                                 </el-table-column>
-                                <el-table-column prop="create_time" label="奖品名称">
+                                <el-table-column prop="reward" label="奖品名称">
                                 </el-table-column>
-                                <el-table-column prop="city" label="奖品图片">
+                                <el-table-column prop="reward_pic" label="奖品图片">
+                                    <template scope="scope">
+                                        <img :src="scope.row.reward_pic">
+                                    </template>
                                 </el-table-column>
-                                <el-table-column prop="admin" label="获奖概率">
+                                <el-table-column prop="reward_chance" label="获奖概率">
                                 </el-table-column>
-                                <el-table-column prop="admin" label="剩余数量">
+                                <el-table-column prop="reward_num" label="剩余数量">
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -46,30 +52,14 @@
     </div>
 </template>
 <script>
-import { getUserList, getUserCount } from '@/api/getData'
-import { adminList, adminCount } from '@/api/getData'
+import { wheel } from '@/api/getData'
 export default {
     data() {
         return {
-            tableData: [],
+            turnTableData: [],
+            fruitTableData: [],
             currentRow: null,
-            offset: 0,
-            limit: 20,
-            count: 0,
             currentPage: 1,
-            dropdownText: '全部',
-            value1: '',
-            value2: '',
-            pickerOptions0: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
-            },
-            pickerOptions1: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
-            }
         }
     },
     created() {
@@ -78,38 +68,17 @@ export default {
     methods: {
         async initData() {
             try {
-                const countData = await adminCount();
-                if (countData.status == 1) {
-                    this.count = countData.count;
+                const responseData = await wheel();
+                console.log(responseData);
+                if (responseData.code == '1') {
+                    this.turnTableData = responseData.data;
                 } else {
                     throw new Error('获取数据失败');
                 }
-                this.getAdmin();
             } catch (err) {
                 console.log('获取数据失败', err);
             }
         },
-        async getAdmin() {
-            try {
-                const res = await adminList({ offset: this.offset, limit: this.limit });
-                if (res.status == 1) {
-                    this.tableData = [];
-                    res.data.forEach(item => {
-                        const tableItem = {
-                            create_time: item.create_time,
-                            user_name: item.user_name,
-                            admin: item.admin,
-                            city: item.city,
-                        }
-                        this.tableData.push(tableItem)
-                    })
-                } else {
-                    throw new Error(res.message)
-                }
-            } catch (err) {
-                console.log('获取数据失败', err);
-            }
-        }
     },
 }
 
