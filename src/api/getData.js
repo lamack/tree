@@ -86,7 +86,7 @@ export const userRole= data => fetch('/user/user/role', data);
 
 
 //任务列表
-export const task = data => fetch('/task/task/userupdate', data);
+export const task = data => fetch('/task/task/index', data);
 //任务设置
 export const taskSet = data => fetch('/task/task/task_setting', data,'POST');
 
