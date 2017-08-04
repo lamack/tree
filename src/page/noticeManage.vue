@@ -184,27 +184,6 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        async getAdmin() {
-            try {
-                const res = await adminList({ offset: this.offset, limit: this.limit });
-                if (res.status == 1) {
-                    this.tableData = [];
-                    res.data.forEach(item => {
-                        const tableItem = {
-                            create_time: item.create_time,
-                            user_name: item.user_name,
-                            admin: item.admin,
-                            city: item.city,
-                        }
-                        this.tableData.push(tableItem)
-                    })
-                } else {
-                    throw new Error(res.message)
-                }
-            } catch (err) {
-                console.log('获取数据失败', err);
-            }
-        }
     },
 }
 

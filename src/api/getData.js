@@ -60,7 +60,7 @@ export const vieSet = data => fetch('/vie/vie/vie_setting', data,'POST');
 //获得分享接口
 export const share = data => fetch('/share/share/index', data);
 //获得zan
-export const shareZan = data => fetch('/share/share/index', data);
+export const shareZan = data => fetch('/share/share/zan', data);
 //zan设置
 export const zanSet = data => fetch('/share/share/zan_setting', data,'POST');
 //绿值互送设置

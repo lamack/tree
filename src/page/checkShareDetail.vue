@@ -1,21 +1,21 @@
 <template>
     <div class="fillcontain">
-        <div class="go-back bt">
-            <el-button type="primary" size="small">返回</el-button>
+        <div class="go-back bb">
+            <el-button type="primary">返回</el-button>
         </div>
         <div class="award-wrap">
-            <el-tabs type="border-card">
+            <el-tabs type="border-card" @tab-click="handleTabClick">
                 <el-tab-pane label="分享">
                     <template>
                         <div class="table_container">
-                            <el-table :data="tableData" style="width: 100%">
-                                <el-table-column prop="user_name" label="会员ID">
+                            <el-table :data="shareTableData" style="width: 100%">
+                                <el-table-column prop="id" label="会员ID">
                                 </el-table-column>
-                                <el-table-column prop="create_time" label="会员名称">
+                                <el-table-column prop="username" label="会员名称">
                                 </el-table-column>
-                                <el-table-column prop="city" label="分享时间">
+                                <el-table-column prop="share_time" label="分享时间">
                                 </el-table-column>
-                                <el-table-column prop="admin" label="分享渠道">
+                                <el-table-column prop="share_channel" label="分享渠道">
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -24,14 +24,14 @@
                 <el-tab-pane label="集赞">
                     <template>
                         <div class="table_container">
-                            <el-table :data="tableData" style="width: 100%">
-                                <el-table-column prop="user_name" label="会员ID">
+                            <el-table :data="zanTableData" style="width: 100%">
+                                <el-table-column prop="id" label="会员ID">
                                 </el-table-column>
-                                <el-table-column prop="create_time" label="奖品名称">
+                                <el-table-column prop="username" label="奖品名称">
                                 </el-table-column>
-                                <el-table-column prop="city" label="获赞时间">
+                                <el-table-column prop="zan_time" label="获赞时间">
                                 </el-table-column>
-                                <el-table-column prop="admin" label="赞数变化">
+                                <el-table-column prop="zan_change" label="赞数变化">
                                 </el-table-column>
                             </el-table>
                         </div>
@@ -42,70 +42,58 @@
     </div>
 </template>
 <script>
-import { getUserList, getUserCount } from '@/api/getData'
-import { adminList, adminCount } from '@/api/getData'
+import { share, shareZan } from '@/api/getData'
 export default {
     data() {
         return {
-            tableData: [],
-            currentRow: null,
-            offset: 0,
-            limit: 20,
+            shareTableData: [],
+            zanTableData: [],
             count: 0,
-            currentPage: 1,
-            dropdownText: '全部',
-            value1: '',
-            value2: '',
-            pickerOptions0: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
-            },
-            pickerOptions1: {
-                disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                }
-            }
+            
         }
     },
     created() {
-        this.initData();
+        this.shareData();
     },
     methods: {
-        async initData() {
+        async shareData() {
             try {
-                const countData = await adminCount();
-                if (countData.status == 1) {
-                    this.count = countData.count;
-                } else {
-                    throw new Error('获取数据失败');
-                }
-                this.getAdmin();
+                const res = await share();
+                if (res.code == '1') {
+                    this.shareTableData = res.data;
+
+                  } else {
+                      this.$message({
+                          type: 'error',
+                          message: res.data.msg
+                      });
+                  }
             } catch (err) {
                 console.log('获取数据失败', err);
             }
         },
-        async getAdmin() {
+        async shareZanData() {
             try {
-                const res = await adminList({ offset: this.offset, limit: this.limit });
-                if (res.status == 1) {
-                    this.tableData = [];
-                    res.data.forEach(item => {
-                        const tableItem = {
-                            create_time: item.create_time,
-                            user_name: item.user_name,
-                            admin: item.admin,
-                            city: item.city,
-                        }
-                        this.tableData.push(tableItem)
-                    })
-                } else {
-                    throw new Error(res.message)
-                }
+                const res = await shareZan();
+                if (res.code == '1') {
+                    this.zanTableData = res.data;
+                    
+                  } else {
+                      this.$message({
+                          type: 'error',
+                          message: res.data.msg
+                      });
+                  }
             } catch (err) {
                 console.log('获取数据失败', err);
             }
+        },
+        handleTabClick(tab, event) {
+            if (tab.index == '1') {
+                this.shareZanData();
+            }
         }
+        
     },
 }
 
