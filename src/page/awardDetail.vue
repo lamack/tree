@@ -155,28 +155,5 @@ export default {
 </script>
 <style lang="less">
 @import '../style/mixin';
-.table_container {
-    padding: 20px;
-}
-
-.go-back {
-    margin: 0 20px;
-    padding: 10px 0;
-}
-
-.header-wrap {
-    margin: 0px 20px;
-    padding-top: 20px;
-}
-
-.header-wrap label {
-    font-size: 15px;
-    margin-right: 5px;
-}
-
-.header-wrap .type-option {
-    height: 35px;
-    line-height: 35px;
-}
 
 </style>

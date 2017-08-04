@@ -5,20 +5,20 @@
        <el-row class="form-wrap">
           <el-col :span="10">
             <el-form ref="form" :model="form" :rules="rules" label-width="125px">
-            <el-form-item prop="vie_numbers" label="试题抽取设置：">
-                <label>每次随机抽取<el-input v-model="form.vie_numbers" type="number" class="input-b1"></el-input>道试</label>
-            </el-form-item>
-            <el-form-item prop="vie_right" label="奖励设置：">
-                <label>每答对<el-input v-model="form.vie_right" type="number" class="input-b1"></el-input>道试题获得<el-input v-model="form.vie_share" type="number" class="input-b1"></el-input>分享币</label>
-            </el-form-item>
-            <el-form-item prop="vie_rule" label="竞答规则：">
-              <el-input type="textarea" v-model="form.vie_rule"></el-input>
-            </el-form-item>
-            <el-form-item class="btn-options">
-                <el-button type="primary" @click="submitForm('form')">保存</el-button>
-                <el-button type="primary" @click="cancelClick">取消</el-button>
-            </el-form-item>
-        </el-form>
+              <el-form-item prop="vie_numbers" label="试题抽取设置：">
+                  <label>每次随机抽取<el-input v-model="form.vie_numbers" type="number" class="input-b1"></el-input>道试</label>
+              </el-form-item>
+              <el-form-item prop="vie_right" label="奖励设置：">
+                  <label>每答对<el-input v-model="form.vie_right" type="number" class="input-b1"></el-input>道试题获得<el-input v-model="form.vie_share" type="number" class="input-b1"></el-input>分享币</label>
+              </el-form-item>
+              <el-form-item prop="vie_rule" label="竞答规则：">
+                <el-input type="textarea" v-model="form.vie_rule"></el-input>
+              </el-form-item>
+              <el-form-item class="btn-options">
+                  <el-button type="primary" @click="submitForm('form')">保存</el-button>
+                  <el-button type="primary" @click="cancelClick">取消</el-button>
+              </el-form-item>
+          </el-form>
         </el-col>
        </el-row>
     </div>

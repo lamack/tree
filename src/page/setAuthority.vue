@@ -1,74 +1,53 @@
 <template>
     <div class="fillcontain">
-	    <div class="go-back bt">
+	    <div class="go-back bb">
             <el-button type="primary">返回</el-button>
         </div>
-        <div class="table_container bt">
+        <div class="table_container bb">
         <div class="sub-title">为 超级管理员 分配权限</div>
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="" label="菜单">
+                <el-table-column prop="menu" label="菜单">
 	                <template  scope="scope">
-	                	<el-checkbox v-model="checked" checked>公告管理</el-checkbox>
+	                	<el-checkbox v-model="checked" checked>scope.row.menu</el-checkbox>
 	                </template>
                 </el-table-column>
-                <el-table-column prop="admin" label="子菜单">
+                <el-table-column prop="menu" label="子菜单">
                 	<template  scope="scope">
-	                	<el-checkbox v-model="checked" checked>查看编辑</el-checkbox>
-	                	<el-checkbox v-model="checked" checked>查询记录</el-checkbox>
+	                	<el-checkbox v-model="checked" checked>scope.row.menu</el-checkbox>
 	                </template>
                 </el-table-column>
             </el-table>
         </div>
         <el-row class="btn-options">
-            <el-button type="primary" @click="onSubmit">保存</el-button>
+            <el-button type="primary" @click="saveClick">保存</el-button>
         </el-row>
     </div>
 </template>
 
 <script>
-    import headTop from '../components/headTop'
-    import {adminList, adminCount} from '@/api/getData'
+    import {userRole} from '@/api/getData'
     export default {
         data(){
             return {
                 tableData: [],
-                currentRow: null,
-                offset: 0,
-                limit: 20,
-                count: 0,
-                currentPage: 1,
-                dropdownText: '全部',
-                value1: '',
-                value2: '',
-                pickerOptions0: {
-                  disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                  }
-                },
-                pickerOptions1: {
-                  disabledDate(time) {
-                    return time.getTime() < Date.now() - 8.64e7;
-                  }
-                }
             }
-        },
-        components: {
-            headTop,
         },
         created(){
             this.initData();
         },
         methods: {
-            async initData(){
-                try{
-                    const countData = await adminCount();
-                    if (countData.status == 1) {
-                        this.count = countData.count;
-                    }else{
-                        throw new Error('获取数据失败');
-                    }
-                    this.getAdmin();
-                }catch(err){
+            async initData() {
+                try {
+                    const res = await userRole();
+                    if (res.data.status == 'succ') {
+                        this.tableData = res.data.data;
+                      } else {
+                          this.$message({
+                              type: 'error',
+                              message: res.data.msg
+                          });
+                      }
+                } catch (err) {
                     console.log('获取数据失败', err);
                 }
             },
@@ -78,75 +57,20 @@
             handleCurrentChange(val) {
                 this.currentPage = val;
                 this.offset = (val - 1)*this.limit;
-                this.getAdmin()
             },
-            handleCommand(command) {
-                this.dropdownText = command;
+            saveClick() {
 
-                if (command == '全部订单') {
-                    this.url = '/static/jsonList/orderList.json';
-                } else if (command == '待处理订单') {
-                    this.url = '/static/jsonList/pendingOrderList.json';
-                } else if (command == '未完成订单') {
-                    this.url = '/static/jsonList/undoneOrderList.json';
-                } else if (command == '已完成订单') {
-                    this.url = '/static/jsonList/doneOrderList.json';
-                } else if (command == '已作废订单') {
-                    this.url = '/static/jsonList/voidedrderList.json';
-                }
-                this.getOrderList(this.url);
-            },
-            async getAdmin(){
-                try{
-                    const res = await adminList({offset: this.offset, limit: this.limit});
-                    if (res.status == 1) {
-                        this.tableData = [];
-                        res.data.forEach(item => {
-                            const tableItem = {
-                                create_time: item.create_time,
-                                user_name: item.user_name,
-                                admin: item.admin,
-                                city: item.city,
-                            }
-                            this.tableData.push(tableItem)
-                        })
-                    }else{
-                        throw new Error(res.message)
-                    }
-                }catch(err){
-                    console.log('获取数据失败', err);
-                }
             }
+            
         },
     }
 </script>
 
 <style lang="less">
     @import '../style/mixin';
-    .table_container{
-        padding: 20px;
+      .btn-options {
+        padding: 20px 20px;
     }
-    .go-back{
-        margin: 0 20px;
-        padding:10px 0;
-    }
-    .header-wrap{
-        margin: 0 20px;
-        padding: 5px 0px 20px 20px;
-        
-    }
-    .header-wrap label{
-        font-size: 15px;
-        margin-right: 5px;
-    }
-    .header-wrap .type-option{
-        height: 35px;
-        line-height: 35px;
-    }
-    .sub-title {
-    font-size: 22px;
-    margin: 20px 0;
-}
-</style>
+    </style>
 
 

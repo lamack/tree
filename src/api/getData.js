@@ -74,9 +74,9 @@ export const user = data => fetch('/user/user/index', data);
 //后台获得用户
 export const userInfo = data => fetch('/user/user/userinfo', data);
 //更新用户
-export const userUpdate = data => fetch('/user/user/uppw', data,'POST');
+export const userUpdate = data => fetch('/user/user/userupdate', data,'POST');
 //更新用户密码
-export const userUppw = data => fetch('/user/user/userupdate', data,'POST');
+export const userUppwd = data => fetch('/user/user/uppw', data,'POST');
 //添加用户
 export const userAdd = data => fetch('/user/user/add', data,'POST');
 //添加角色
