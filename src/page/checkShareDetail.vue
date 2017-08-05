@@ -49,7 +49,7 @@ export default {
             shareTableData: [],
             zanTableData: [],
             count: 0,
-            
+
         }
     },
     created() {
@@ -62,12 +62,12 @@ export default {
                 if (res.code == '1') {
                     this.shareTableData = res.data;
 
-                  } else {
-                      this.$message({
-                          type: 'error',
-                          message: res.data.msg
-                      });
-                  }
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: res.data.msg
+                    });
+                }
             } catch (err) {
                 console.log('获取数据失败', err);
             }
@@ -77,13 +77,13 @@ export default {
                 const res = await shareZan();
                 if (res.code == '1') {
                     this.zanTableData = res.data;
-                    
-                  } else {
-                      this.$message({
-                          type: 'error',
-                          message: res.data.msg
-                      });
-                  }
+
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: res.data.msg
+                    });
+                }
             } catch (err) {
                 console.log('获取数据失败', err);
             }
@@ -93,7 +93,7 @@ export default {
                 this.shareZanData();
             }
         }
-        
+
     },
 }
 

@@ -153,11 +153,10 @@
                                 </el-form>
                             </el-col>
                         </el-row>
-                    </template></el-tab-pane>
+                    </template>
+                </el-tab-pane>
             </el-tabs>
         </div>
-        <el-row class="btn-options">
-        </el-row>
     </div>
 </template>
 <script>
