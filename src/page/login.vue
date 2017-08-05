@@ -14,7 +14,7 @@
                     </el-form-item>
                     <el-form-item prop="password" label="验证码：" label-width="85px">
                         <el-input type="text" placeholder="请输入验证码" v-model="loginForm.code" style="width:115px"></el-input>
-                        <img id="codeImg" src="http://saictree.innke.net:8081/index.php/user/user/code" @click="refreshCodeClick">
+                        <img id="codeImg" :src="baseUrl + '/user/user/code'" @click="refreshCodeClick">
                         <el-button type="text" @click="refreshCodeClick">刷新</el-button>
                     </el-form-item>
                     <el-form-item>
@@ -27,11 +27,13 @@
 </template>
 <script>
 import { login, code } from '@/api/getData'
+import { baseUrl } from '@/config/env'
 import { mapActions, mapState } from 'vuex'
 
 export default {
     data() {
         return {
+            baseUrl,
             loginForm: {
                 username: '',
                 password: '',
