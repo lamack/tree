@@ -1,9 +1,9 @@
 <template>
     <div class="fillcontain">
-        <div class="go-back bt">
-            <el-button type="primary" size="small">返回</el-button>
+        <div class="go-back bb">
+            <el-button type="primary" @click="goBackClick">返回</el-button>
         </div>
-        <div class="table_container bt">
+        <div class="table_container bb">
             <div class="sub-title">基本信息</div>
             <el-table :data="tableData" highlight-current-row style="width: 100%" header-align="center">
                 <el-table-column prop="id" type="index" width="80" label="会员ID">
@@ -35,13 +35,13 @@
         <div class="table_container">
             <div class="sub-title">道具</div>
             <el-table :data="propTableData" highlight-current-row style="width: 60%" header-align="center">
-                <el-table-column prop="num" label="浇水壶数量" width="150">
+                <el-table-column prop="num" label="浇水壶数量">
                 </el-table-column>
-                <el-table-column prop="registe_time" label="小铲子数量" width="150">
+                <el-table-column prop="registe_time" label="小铲子数量">
                 </el-table-column>
-                <el-table-column prop="username" label="肥料" width="220">
+                <el-table-column prop="username" label="肥料">
                 </el-table-column>
-                <el-table-column prop="city" label="保护罩" width="220">
+                <el-table-column prop="city" label="保护罩">
                 </el-table-column>
             </el-table>
         </div>
@@ -109,6 +109,9 @@ export default {
             this.offset = (val - 1) * this.limit;
             this.getUsers()
         },
+        goBackClick() {
+            this.$router.go(-1);
+        }
         // async getUsers() {
         //     const Users = await getUserList({ offset: this.offset, limit: this.limit });
         //     this.tableData = [];

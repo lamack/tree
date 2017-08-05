@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
-    	<div class="header-wrap bt">
-    		<el-form :model="form" ref="form" class="demo-ruleForm" label-position="left">
+        <div class="header-wrap bb">
+            <el-form :model="form" ref="form" class="demo-ruleForm" label-position="left">
                 <el-row :gutter="10">
                     <el-col :span="12" class="type-option">
                         <el-form-item label="时间范围" prop="dateValue" label-width="80px">
@@ -15,12 +15,12 @@
                 </el-row>
                 <el-row class="btn-options">
                     <el-form-item>
-                        <el-button type="primary" size="small" @click="queryClick">查询</el-button>
-                        <el-button type="danger" size="small" @click="resetForm('form')">重置</el-button>
+                        <el-button type="primary" @click="queryClick">查询</el-button>
+                        <el-button type="danger" @click="resetForm('form')">重置</el-button>
                     </el-form-item>
                 </el-row>
             </el-form>
-    	</div>
+        </div>
         <div class="table_container">
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="user_name" label="会员ID">
@@ -37,104 +37,85 @@
                 </el-table-column>
                 <el-table-column prop="" label="操作" inline-template>
                     <span>
-				        <el-button type="text" size="small">查看详情</el-button>
-				    </span>
+                        <el-button type="text" @click="lookDetailClick">查看详情</el-button>
+                    </span>
                 </el-table-column>
             </el-table>
-            <div class="Pagination" style="text-align: left;margin-top: 10px;">
+            <div class="Pagination" style="text-align: right;margin-top: 10px;">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="20" layout="total, prev, pager, next" :total="count">
                 </el-pagination>
             </div>
         </div>
     </div>
 </template>
-
 <script>
-    import {adminList, adminCount} from '@/api/getData'
-    export default {
-        data(){
-            return {
-                tableData: [],
-                currentRow: null,
-                offset: 0,
-                limit: 20,
-                count: 0,
-                currentPage: 1,
-                form: {
+import { adminList, adminCount } from '@/api/getData'
+export default {
+    data() {
+        return {
+            tableData: [],
+            currentRow: null,
+            offset: 0,
+            limit: 20,
+            count: 0,
+            currentPage: 1,
+            form: {
                 dateValue: '',
                 date1: '',
                 date2: '',
             },
-                pickerOptions0: {
-		          disabledDate(time) {
-		            return time.getTime() < Date.now() - 8.64e7;
-		          }
-		        },
-		        pickerOptions1: {
-		          disabledDate(time) {
-		            return time.getTime() < Date.now() - 8.64e7;
-		          }
-		        }
-            }
-        },
-        created(){
-            this.initData();
-        },
-        methods: {
-            async initData(){
-                try{
-                    const countData = await adminCount();
-                    if (countData.status == 1) {
-                        this.count = countData.count;
-                    }else{
-                        throw new Error('获取数据失败');
-                    }
-                }catch(err){
-                    console.log('获取数据失败', err);
+            pickerOptions0: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
                 }
             },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
-            },
-            handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1)*this.limit;
-            },
-            queryClick() {
+            pickerOptions1: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            }
+        }
+    },
+    created() {
+        this.initData();
+    },
+    methods: {
+        async initData() {
+            try {
+                const countData = await adminCount();
+                if (countData.status == 1) {
+                    this.count = countData.count;
+                } else {
+                    throw new Error('获取数据失败');
+                }
+            } catch (err) {
+                console.log('获取数据失败', err);
+            }
+        },
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+            this.currentPage = val;
+            this.offset = (val - 1) * this.limit;
+        },
+        queryClick() {
             // this.params.keyWords = this.validateForm.keyWords;
             // console.log(this.validateForm.keyWords);
             // console.log(this.params);
-
+            this.$router.push('checkShareDetail');
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
-        }
         },
-    }
+        lookDetailClick() {
+            this.$router.push('checkShareDetail');
+        }
+    },
+}
+
 </script>
-
 <style lang="less">
-	@import '../style/mixin';
-    .table_container{
-        padding: 20px;
-    }
-    .go-back{
-    	margin: 0 20px;
-    	padding:10px 0;
-    }
-    .header-wrap{
-    	margin: 0 20px;
-    	padding: 5px 0px 20px 20px;
-	    
-    }
-    .header-wrap label{
-		font-size: 15px;
-		margin-right: 5px;
-    }
-    .header-wrap .type-option{
-        height: 35px;
-	    line-height: 35px;
-    }
+@import '../style/mixin';
+
 </style>
-
-

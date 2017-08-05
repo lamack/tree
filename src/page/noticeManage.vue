@@ -1,6 +1,6 @@
 <template>
     <div class="fillcontain">
-        <div class="header-wrap bt">
+        <div class="header-wrap bb">
             <el-form :model="validateForm" ref="validateForm" class="demo-ruleForm" label-position="left">
                 <el-row :gutter="10">
                     <el-col :span="5" class="type-option">
@@ -190,32 +190,8 @@ export default {
 </script>
 <style lang="less">
 @import '../style/mixin';
-.table_container {
-    padding: 20px;
-}
 
-.go-back {
-    margin: 0 20px;
-    padding: 10px 0;
-}
 
-.header-wrap {
-    margin: 0px 20px;
-    padding-top: 20px;
-}
-
-.header-wrap label {
-    font-size: 15px;
-}
-
-.header-wrap .type-option {
-    height: 35px;
-    line-height: 35px;
-}
-
-.btn-options {
-    margin-top: 15px;
-}
 .create-notice-btn{
     margin-bottom: 10px;
 }

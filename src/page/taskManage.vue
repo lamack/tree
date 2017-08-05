@@ -73,7 +73,7 @@
                 this.offset = (val - 1)*this.limit;
             },
             createTaskClick() {
-
+                this.$router.push('taskEditor');
             },
             lookDetailClick() {
 

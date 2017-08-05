@@ -1,6 +1,6 @@
 <template>
     <div class="fillcontain">
-       <div class="go-back bb"><el-button type="primary">返回</el-button></div>
+       <!-- <div class="go-back bb"><el-button type="primary">返回</el-button></div> -->
        <div class="sub-title">集赞设置</div>
        <el-row class="form-wrap">
           <el-col :span="16">

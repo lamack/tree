@@ -7,35 +7,40 @@
 					<el-submenu index="2">
 						<template slot="title"><router-link to="memberManage"><i class="el-icon-document"></i>会员管理</router-link></template>
 						<el-menu-item index="checkMemberEditor">查看编辑</el-menu-item>
-						<el-menu-item index="checkMemberRecord">查询记录</el-menu-item>
+						<!-- <el-menu-item index="checkMemberRecord">查询记录</el-menu-item> -->
 					</el-submenu>
-					<el-submenu index="3">
-						<template slot="title"><router-link to="noticeManage"><i class="el-icon-plus"></i>公告管理</router-link></template>
-						<el-menu-item index="createNotice">新建/编辑公告</el-menu-item>
-					</el-submenu>
-					<el-submenu index="4">
+					<el-menu-item index="noticeManage"><i class="el-icon-plus"></i>公告管理</el-menu-item>
+					<!-- <el-submenu index="3"> -->
+						<!-- <template slot="title"><router-link to="noticeManage"><i class="el-icon-plus"></i>公告管理</router-link></template> -->
+						<!-- <el-menu-item index="createNotice">新建/编辑公告</el-menu-item> -->
+					<!-- </el-submenu> -->
+					<el-menu-item index="quizzesManage"><i class="el-icon-star-on"></i>竞答管理</el-menu-item>
+					<!-- <el-submenu index="4">
 						<template slot="title"><router-link to="quizzesManage"><i class="el-icon-star-on"></i>竞答管理</router-link></template>
 						<el-menu-item index="quizzesSetting">竞答设置</el-menu-item>
-					</el-submenu>
+					</el-submenu> -->
 					<el-submenu index="5">
 						<template slot="title"><router-link to="awardManage"><i class="el-icon-edit"></i>抽奖管理</router-link></template>
 						<el-menu-item index="awardSetting">奖品设置</el-menu-item>
-						<el-submenu index="5-1">
+						<el-menu-item index="awardList">用户获奖列表</el-menu-item>
+						<!-- <el-submenu index="5-1">
 				          <template slot="title"><router-link to="awardList">用户获奖列表</router-link></template>
 				          <el-menu-item index="awardDetail">用户获奖详情</el-menu-item>
-				        </el-submenu>
+				        </el-submenu> -->
 					</el-submenu>
-					<el-submenu index="6">
+					<el-menu-item index="taskManage"><i class="el-icon-setting"></i>任务管理</el-menu-item>
+					<!-- <el-submenu index="6">
 						<template slot="title"><router-link to="taskManage"><i class="el-icon-setting"></i>任务管理</router-link></template>
 						<el-menu-item index="taskEditor">任务编辑</el-menu-item>
-					</el-submenu>
-					<el-submenu index="7">
+					</el-submenu> -->
+					<el-menu-item index="sceneManage"><i class="el-icon-setting"></i>道具管理</el-menu-item>
+					<!-- <el-submenu index="7">
 						<template slot="title"><router-link to="sceneManage"><i class="el-icon-warning"></i>道具管理</router-link></template>
 						<el-menu-item index="sceneSetting">道具设置</el-menu-item>
-					</el-submenu>
+					</el-submenu> -->
 					<el-submenu index="8">
 						<template slot="title"><router-link to="shareManage"><i class="el-icon-warning"></i>分享管理</router-link></template>
-						<el-menu-item index="checkShareDetail">查看详情</el-menu-item>
+						<!-- <el-menu-item index="checkShareDetail">查看详情</el-menu-item> -->
 						<el-menu-item index="coletFavManage">集赞管理</el-menu-item>
 						<el-menu-item index="plantsExgManage">绿值互送管理</el-menu-item>
 						<el-menu-item index="treeSendManage">树苗赠送管理</el-menu-item>

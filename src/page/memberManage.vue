@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <div class="header-wrap bb">
-            <el-form :model="validateForm" ref="validateForm" label-width="60px" class="demo-ruleForm" label-position="left">
+            <el-form :model="validateForm" ref="validateForm" :rules="rules" label-width="60px" class="demo-ruleForm" label-position="left">
                 <el-row :gutter="10">
                     <el-col :span="5" class="type-option">
                         <el-form-item label="区域" prop="areaValue">
@@ -93,35 +93,89 @@ export default {
                 classValue: '',
                 keyWords: '',
                 areaOptions: [{
-                    value: '选项1',
-                    label: '黄金糕'
+                    value: '0',
+                    label: '黄浦区'
                 }, {
-                    value: '选项2',
-                    label: '双皮奶'
+                    value: '1',
+                    label: '徐汇区'
                 }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
+                    value: '2',
+                    label: '长宁区'
                 }, {
-                    value: '选项4',
-                    label: '龙须面'
+                    value: '3',
+                    label: '静安区'
                 }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
+                    value: '4',
+                    label: '普陀区'
+                }, {
+                    value: '5',
+                    label: '虹口区'
+                }, {
+                    value: '6',
+                    label: '宝山区'
+                }, {
+                    value: '7',
+                    label: '闵行区'
+                }, {
+                    value: '8',
+                    label: '嘉定区'
+                }, {
+                    value: '9',
+                    label: '浦东新区'
+                }, {
+                    value: '10',
+                    label: '松江区'
+                }, {
+                    value: '11',
+                    label: '金山区'
+                }, {
+                    value: '12',
+                    label: '青浦区'
+                }, {
+                    value: '13',
+                    label: '奉贤区'
+                }, {
+                    value: '14',
+                    label: '崇明区'
+                }, {
+                    value: '15',
+                    label: '杨浦区'
                 }],
                 companyOptions: [{
-                    value: '选项1',
-                    label: '黄金糕'
+                    value: '5',
+                    label: '虹口区'
                 }, {
-                    value: '选项2',
-                    label: '双皮奶'
+                    value: '6',
+                    label: '宝山区'
                 }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
+                    value: '7',
+                    label: '闵行区'
                 }, {
-                    value: '选项4',
-                    label: '龙须面'
+                    value: '8',
+                    label: '嘉定区'
                 }, {
-                    value: '选项5',
+                    value: '9',
+                    label: '浦东新区'
+                }, {
+                    value: '10',
+                    label: '松江区'
+                }, {
+                    value: '11',
+                    label: '金山区'
+                }, {
+                    value: '12',
+                    label: '青浦区'
+                }, {
+                    value: '13',
+                    label: '奉贤区'
+                }, {
+                    value: '14',
+                    label: '崇明区'
+                }, {
+                    value: '15',
+                    label: '北京烤鸭'
+                }, {
+                    value: '16',
                     label: '北京烤鸭'
                 }],
                 classOptions: [{
@@ -140,6 +194,20 @@ export default {
                     value: '选项5',
                     label: '北京烤鸭'
                 }],
+            },
+            rules: {
+                task_describe: [
+                    { required: true, message: '请输入任务描述', trigger: 'blur' },
+                ],
+                task_pic: [
+                    { required: true, message: '请上传任务图片', trigger: 'blur' },
+                ],
+                reward_condition: [
+                    { required: true, message: '请选择触发条件', trigger: 'change' }
+                ],
+                jump: [
+                    { required: true, message: '请选择跳转方式', trigger: 'change' }
+                ],
             },
 
         }
@@ -164,8 +232,9 @@ export default {
             try {
 
                 const responseData = await memberRecode(this.params);
-                if (responseData.code == 1) {
+                if (responseData.code == '1') {
                     this.tableData = responseData.data;
+                    this.$router.push('checkMemberRecord');
                 } else {
                     throw new Error('获取数据失败');
                 }

@@ -162,6 +162,8 @@ export default {
             console.log(this.params);
 
             this.getAwardUser();
+            // 获奖详情
+            this.$router.push('awardDetail');
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();

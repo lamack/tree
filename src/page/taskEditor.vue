@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <div class="go-back bb">
-            <el-button type="primary">返回</el-button>
+            <el-button type="primary" @click="goBackClick">返回</el-button>
         </div>
         <div class="task-editor-wrap">
             <el-row class="award-setting-wrap">

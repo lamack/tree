@@ -1,11 +1,11 @@
 <template>
     <div class="fillcontain">
-        <div class="go-back bt">
-            <el-button type="primary" size="small">返回</el-button>
+        <div class="go-back bb">
+            <el-button type="primary" @click='goBackClick'>返回</el-button>
         </div>
-        <div class="header-wrap bt">
-            <el-form :model="validateForm" ref="validateForm" class="demo-ruleForm" label-position="left">
-                <el-row :gutter="10">
+        <div class="header-wrap bb">
+            <el-form :model="validateForm" ref="validateForm" :rules="rules" class="demo-ruleForm" label-position="left">
+                <el-row>
                     <el-col :span="5" class="type-option">
                         <el-form-item label="类型" prop="typeValue" label-width="50px">
                             <el-select v-model="validateForm.typeValue" placeholder="请选择" @change="handleTypeValue">
@@ -14,20 +14,28 @@
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="12" class="type-option">
+                    <el-col :span="13" class="type-option">
                         <el-form-item label="时间范围" prop="companyValue" label-width="80px">
-                            <el-date-picker v-model="validateForm.date1" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
-                            </el-date-picker>
-                            <label>--</label>
-                            <el-date-picker v-model="validateForm.date2" type="date" placeholder="选择日期" :picker-options="pickerOptions1">
-                            </el-date-picker>
+                            <el-col :span="5">
+                                <el-form-item prop="start_time">
+                                    <el-date-picker v-model="validateForm.date1" type="date" placeholder="选择日期" :picker-options="pickerOptions0">
+                                    </el-date-picker>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="1" style="text-align: right;margin:0 15px;">-</el-col>
+                            <el-col :span="5">
+                                <el-form-item prop="end_time">
+                                    <el-date-picker v-model="validateForm.date2" type="date" placeholder="选择日期" :picker-options="pickerOptions1">
+                                    </el-date-picker>
+                                </el-form-item>
+                            </el-col>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row class="btn-options">
                     <el-form-item>
-                        <el-button type="primary" size="small" @click="queryClick">查询</el-button>
-                        <el-button type="danger" size="small" @click="resetForm('validateForm')">重置</el-button>
+                        <el-button type="primary" @click="queryClick">查询</el-button>
+                        <el-button type="danger" @click="resetForm('validateForm')">重置</el-button>
                     </el-form-item>
                 </el-row>
             </el-form>
@@ -53,8 +61,7 @@
     </div>
 </template>
 <script>
-import headTop from '../components/headTop'
-import { adminList, adminCount } from '@/api/getData'
+import { memberRecode } from '@/api/getData'
 export default {
     data() {
         return {
@@ -64,6 +71,7 @@ export default {
             limit: 20,
             count: 0,
             currentPage: 1,
+            params: {},
             validateForm: {
                 typeValue: '',
                 typeOptions: [{
@@ -85,10 +93,31 @@ export default {
                 date1: '',
                 date2: '',
             },
+            rules: {
+                task_describe: [
+                    { required: true, message: '请输入任务描述', trigger: 'blur' },
+                ],
+                task_pic: [
+                    { required: true, message: '请上传任务图片', trigger: 'blur' },
+                ],
+                reward_condition: [
+                    { required: true, message: '请选择触发条件', trigger: 'change' }
+                ],
+                jump: [
+                    { required: true, message: '请选择跳转方式', trigger: 'change' }
+                ],
+            },
+            pickerOptions0: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            },
+            pickerOptions1: {
+                disabledDate(time) {
+                    return time.getTime() < Date.now() - 8.64e7;
+                }
+            }
         }
-    },
-    components: {
-        headTop,
     },
     created() {
         this.initData();
@@ -96,13 +125,12 @@ export default {
     methods: {
         async initData() {
             try {
-                const countData = await adminCount();
-                if (countData.status == 1) {
-                    this.count = countData.count;
+                const res = await memberRecode();
+                if (res.code == '1') {
+                    this.tableData = res.data;
                 } else {
                     throw new Error('获取数据失败');
                 }
-                this.getAdmin();
             } catch (err) {
                 console.log('获取数据失败', err);
             }
@@ -113,44 +141,28 @@ export default {
         handleCurrentChange(val) {
             this.currentPage = val;
             this.offset = (val - 1) * this.limit;
-            this.getAdmin()
         },
-        handleCommand(command) {
-            this.dropdownText = command;
+        handleTypeValue() {
+            // console.log(value);
+            // let obj = {};
+            // obj = this.validateForm.areaOptions.find((item) => {
+            //     return item.value === value;
+            // });
+            // this.params.area = value;
+            // console.log(obj.label);
+        },
+        queryClick() {
+            // this.params.keyWords = this.validateForm.keyWords;
+            // console.log(this.validateForm.keyWords);
+            // console.log(this.params);
 
-            if (command == '全部订单') {
-                this.url = '/static/jsonList/orderList.json';
-            } else if (command == '待处理订单') {
-                this.url = '/static/jsonList/pendingOrderList.json';
-            } else if (command == '未完成订单') {
-                this.url = '/static/jsonList/undoneOrderList.json';
-            } else if (command == '已完成订单') {
-                this.url = '/static/jsonList/doneOrderList.json';
-            } else if (command == '已作废订单') {
-                this.url = '/static/jsonList/voidedrderList.json';
-            }
-            this.getOrderList(this.url);
+            // this.getMemberRecode();
         },
-        async getAdmin() {
-            try {
-                const res = await adminList({ offset: this.offset, limit: this.limit });
-                if (res.status == 1) {
-                    this.tableData = [];
-                    res.data.forEach(item => {
-                        const tableItem = {
-                            create_time: item.create_time,
-                            user_name: item.user_name,
-                            admin: item.admin,
-                            city: item.city,
-                        }
-                        this.tableData.push(tableItem)
-                    })
-                } else {
-                    throw new Error(res.message)
-                }
-            } catch (err) {
-                console.log('获取数据失败', err);
-            }
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
+        },
+        goBackClick() {
+            this.$router.go(-1);
         }
     },
 }
@@ -180,7 +192,9 @@ export default {
     height: 35px;
     line-height: 35px;
 }
+
 .btn-options {
     margin-top: 15px;
 }
+
 </style>

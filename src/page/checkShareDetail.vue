@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <div class="go-back bb">
-            <el-button type="primary">返回</el-button>
+            <el-button type="primary" @click='goBackClick'>返回</el-button>
         </div>
         <div class="award-wrap">
             <el-tabs type="border-card" @tab-click="handleTabClick">
@@ -92,6 +92,9 @@ export default {
             if (tab.index == '1') {
                 this.shareZanData();
             }
+        },
+        goBackClick() {
+            this.$router.go(-1);
         }
 
     },

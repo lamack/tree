@@ -2,7 +2,7 @@
     <div class="fillcontain">
     	<div class="go-back bb"><el-button type="primary">题库上传</el-button></div>
         <div class="table_container">
-        	<el-button type="primary" class="quizzeSet-btn mg-btn">竞答设置</el-button>
+        	<el-button type="primary" class="quizzeSet-btn mg-btn" @click="quizzeSetClick">竞答设置</el-button>
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="id" label="编号">
                 </el-table-column>
@@ -62,6 +62,9 @@
                 this.currentPage = val;
                 this.offset = (val - 1)*this.limit;
             },
+            quizzeSetClick() {
+                this.$router.push('quizzesSetting');
+            }
         },
     }
 </script>

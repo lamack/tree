@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <div class="go-back bb">
-            <el-button type="primary">返回</el-button>
+            <el-button type="primary" @click="goBackClick">返回</el-button>
         </div>
         <div class="header-wrap bb">
             <el-form :model="validateForm" ref="validateForm" label-width="60px" class="demo-ruleForm" label-position="left">
@@ -141,6 +141,9 @@ export default {
             this.currentPage = val;
             this.offset = (val - 1) * this.limit;
         },
+        goBackClick() {
+            this.$router.go(-1);
+        }
         
     },
     queryClick() {
