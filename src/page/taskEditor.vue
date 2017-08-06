@@ -12,9 +12,14 @@
                             <el-input v-model="form.task_describe"></el-input>
                         </el-form-item>
                         <el-form-item prop="task_pic" label="任务图片：">
-                            <el-upload class="avatar-uploader" action="//jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :default-file-list="fileList">
-                                <el-button size="small" type="primary">点击上传</el-button>
-                                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+                            <el-upload 
+                                class="avatar-uploader"
+                                action="https://jsonplaceholder.typicode.com/posts/"
+                                :show-file-list="false"
+                                :on-success="handleImgSuccess"
+                                :before-upload="beforeImgUpload">
+                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                             </el-upload>
                         </el-form-item>
                         <el-form-item label="奖励类型：">
@@ -50,10 +55,13 @@
 </template>
 <script>
 import { taskSet } from '@/api/getData'
+import { baseUrl,baseImgPath } from '@/config/env'
 export default {
     data() {
         return {
-            fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+            currentPage: '1',
+            checked: '',
+            imageUrl: '',
             form: {
                 task_describe: '',
                 task_pic: '',
@@ -82,6 +90,38 @@ export default {
         },
         handlePreview(file) {
             console.log(file);
+        },
+        handleImgSuccess(res, file) {
+            console.log('res');
+            console.log(res);
+            console.log(file);
+            if (res.status == 1) {
+                
+            }else{
+                this.$message.error('上传图片失败！');
+            }
+        },
+        beforeImgUpload(file) {
+            //判断类型是不是图片  
+            if(!/image\/\w+/.test(file.type)){     
+                this.$message.error('请确保文件为图像类型'); 
+                return false;   
+            }   
+            var reader = new FileReader();   
+            reader.readAsDataURL(file);   
+            reader.onload = function(e){   
+                console.log(this.result); //就是base64  
+            }   
+            const isRightType = (file.type === 'image/jpeg') || (file.type === 'image/png');
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isRightType) {
+                this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isRightType && isLt2M;
         },
         async submitForm(formName) {
             this.$refs[formName].validate(async(valid) => {
@@ -119,14 +159,6 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '../style/mixin';
-.go-back {
-    margin: 0 20px;
-    padding: 10px 0;
-}
-
-.table_container {
-    padding: 20px;
-}
 
 .form-wrap {
     margin: 0 20px;
@@ -152,6 +184,29 @@ export default {
 .award-type{
     margin-bottom: 5px;
 }
-    
+.task-editor-wrap .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+  
+  .avatar-uploader .el-upload:hover {
+    border-color: #20a0ff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 88px;
+    height: 88px;
+    line-height: 88px;
+    text-align: center;
+  }
+  .avatar {
+    width: 88px;
+    height: 88px;
+    display: block;
+  }  
 
 </style>
