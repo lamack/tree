@@ -1,17 +1,16 @@
 <template>
     <div class="header_container">
-
-		<el-breadcrumb separator="/">
-			<el-breadcrumb-item :to="{ path: '/manage' }">首页</el-breadcrumb-item>
-			<el-breadcrumb-item v-for="(item, index) in $route.meta" key="index">{{item}}</el-breadcrumb-item>
-		</el-breadcrumb>
-		<el-dropdown @command="handleCommand" menu-align='start'>
-			<img :src="baseImgPath + adminInfo.avatar" class="avator">
-			<el-dropdown-menu slot="dropdown">
-				<el-dropdown-item command="home">首页</el-dropdown-item>
-				<el-dropdown-item command="singout">退出</el-dropdown-item>
-			</el-dropdown-menu>
-		</el-dropdown>
+		<el-row type="flex" justify="space-between">
+			<el-col :span="12">
+				<p class="title">ShopEx后台管理系统</p>
+			</el-col>
+			<el-col :span="12">
+				<div class="role-info">
+					欢迎您：<el-button type="text">administrative（超级管理员）</el-button>
+					<el-button type="text" @click="signoutClick">退出</el-button>
+				</div>
+			</el-col>
+		</el-row>
     </div>
 </template>
 
@@ -36,25 +35,28 @@
     	},
 		methods: {
 			...mapActions(['getAdminData']),
-			async handleCommand(command) {
-				if (command == 'home') {
-					this.$router.push('/manage');
-				}else if(command == 'singout'){
-					const res = await signout()
+			async signoutData() {
+	            try {
+	                const res = await signout();
 					if (res.status == 1) {
 						this.$message({
 	                        type: 'success',
 	                        message: '退出成功'
 	                    });
-	                    this.$router.push('/');
+	                    this.$router.push('login');
 					}else{
 						this.$message({
 	                        type: 'error',
 	                        message: res.message
 	                    });
 					}
-				}
-			},
+	            } catch (err) {
+	                console.log('获取数据失败', err);
+	            }
+	        },
+			signoutClick() {
+				this.signoutData();
+			}
 		}
     }
 </script>
@@ -63,11 +65,16 @@
 	@import '../style/mixin';
 	.header_container{
 		background-color: #EFF2F7;
-		height: 60px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding-left: 20px;
+		height: 100px;
+		line-height: 100px;
+		padding: 0 60px;
+	}
+	.title{
+		font-size: 24px;
+		font-weight: 600;
+	}
+	.role-info{
+		text-align: right;
 	}
 	.avator{
 		.wh(36px, 36px);
