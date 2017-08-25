@@ -41,13 +41,13 @@ export default {
             },
             rules: {
                 username: [
-                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { required: false, message: '请输入用户名', trigger: 'blur' },
                 ],
                 password: [
-                    { required: true, message: '请输入密码', trigger: 'blur' }
+                    { required: false, message: '请输入密码', trigger: 'blur' }
                 ],
                 code: [
-                    { required: true, message: '请输入验证码', trigger: 'blur' }
+                    { required: false, message: '请输入验证码', trigger: 'blur' }
                 ],
             },
             showLogin: false,
@@ -66,20 +66,21 @@ export default {
         async submitForm(formName) {
             this.$refs[formName].validate(async(valid) => {
                 if (valid) {
-                    const res = await login({ username: this.loginForm.username, password: this.loginForm.password, code: this.loginForm.code })
-                    if (res.data.status == 'succ') {
-                    	const token = res.data.token;
-                        this.$message({
-                            type: 'success',
-                            message: '登录成功'
-                        });
+                    // const res = await login({ username: this.loginForm.username, password: this.loginForm.password, code: this.loginForm.code })
                         this.$router.push('memberManage')
-                    } else {
-                        this.$message({
-                            type: 'error',
-                            message: res.data.msg
-                        });
-                    }
+                    // if (res.data.status == 'succ') {
+                    //     const token = res.data.token;
+                    //     this.$message({
+                    //         type: 'success',
+                    //         message: '登录成功'
+                    //     });
+                    //     this.$router.push('memberManage')
+                    // } else {
+                    //     this.$message({
+                    //         type: 'error',
+                    //         message: res.data.msg
+                    //     });
+                    // }
                 } else {
                     this.$notify.error({
                         title: '错误',

@@ -29,8 +29,8 @@
                 </el-table-column>
                 <el-table-column prop="" label="操作" inline-template>
                     <span>
-                        <el-button type="text">查看编辑</el-button>
-                        <el-button type="text">修改密码</el-button>
+                        <el-button type="text" @click="checkSysEditorClick">查看编辑</el-button>
+                        <el-button type="text" @click="modifyPwdClick">修改密码</el-button>
                     </span>
                 </el-table-column>
             </el-table>
@@ -114,6 +114,12 @@
 
                 // this.getMemberRecode();
             },
+            checkSysEditorClick() {
+                this.$router.push('checkSysEditor');
+            },
+            modifyPwdClick() {
+                this.$router.push('modifyPsd');
+            }
         },
     }
 </script>

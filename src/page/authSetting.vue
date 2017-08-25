@@ -8,7 +8,7 @@
                 </el-table-column>
                 <el-table-column prop="" label="操作" inline-template>
                     <span>
-                        <el-button type="text" size="small">设置权限</el-button>
+                        <el-button type="text" size="small" @click="setAuthClick">设置权限</el-button>
                     </span>
                 </el-table-column>
             </el-table>
@@ -50,6 +50,9 @@ export default {
             this.currentPage = val;
             this.offset = (val - 1) * this.limit;
         },
+        setAuthClick() {
+            this.$router.push('setAuthority');
+        }
         
     },
 }

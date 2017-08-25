@@ -52,13 +52,10 @@
 					</el-submenu>
 					<el-submenu index="10">
 						<template slot="title"><router-link to="systemManage"><i class="el-icon-warning"></i>系统管理</router-link></template>
-						<el-menu-item index="checkSysEditor">查看编辑</el-menu-item>
-						<el-menu-item index="modifyPsd">修改密码</el-menu-item>
+						<!-- <el-menu-item index="checkSysEditor">查看编辑</el-menu-item> -->
+						<!-- <el-menu-item index="modifyPsd">修改密码</el-menu-item> -->
 						<el-menu-item index="addBgUser">添加后台用户</el-menu-item>
-						<el-submenu index="10-1">
-				          <template slot="title"><router-link to="authSetting">管理权限设置</router-link></template>
-				          <el-menu-item index="setAuthority">设置权限</el-menu-item>
-				        </el-submenu>
+						<el-menu-item index="authSetting">管理权限设置</el-menu-item>
 					</el-submenu>
 				</el-menu>
 			</el-col>
